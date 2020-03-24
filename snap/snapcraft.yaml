@@ -1,0 +1,42 @@
+name: folding-at-home
+base: core18
+version: '7.5.1'
+summary: Folding@home is a distributed computing project.
+description: |
+ Folding@home is a distributed computing project using volunteered
+ computer resources run by Pandegroup of Stanford University.
+ This snap contains the console client which is used to download
+ and run Folding@home work units, the 3D simulation viewer and the control
+ application.
+
+grade: stable
+confinement: classic 
+
+parts:
+  fahclient:
+    plugin: dump
+    source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.5/fahclient_7.5.1_amd64.deb
+    source-type: deb
+    stage-packages: [bzip2, zlib1g, libgl1-mesa-dri, ocl-icd-libopencl1]
+
+  fahcontrol:
+    plugin: dump
+    source: https://download.foldingathome.org/releases/public/release/fahcontrol/debian-stable-64bit/v7.5/fahcontrol_7.5.1-1_all.deb
+    source-type: deb
+    stage-packages: [python]
+
+  fahviewer:
+    plugin: dump
+    source: https://download.foldingathome.org/releases/public/release/fahviewer/debian-stable-64bit/v7.5/fahviewer_7.5.1_amd64.deb
+    source-type: deb
+    stage-packages: [libx11-6, bzip2, zlib1g, libexpat1, libgl1-mesa-glx, libglu1-mesa, freeglut3]
+
+apps:
+  FAHClient:
+    command: usr/bin/FAHClient --chdir $SNAP_USER_DATA
+  FAHControl:
+    environment:
+       PYTHONPATH=/usr/lib/python2.7/dist-packages:$SNAP/usr/lib/python2.7/dist-packages
+    command: usr/bin/FAHControl
+  FAHViewer:
+    command: usr/bin/FAHViewer
