@@ -1,4 +1,4 @@
-name: folding-at-home
+name: folding-at-home-fcole90
 title: Folding@Home
 icon: snap/gui/fah-logo.png
 base: core18
@@ -16,6 +16,9 @@ description: |
 
 grade: devel
 confinement: strict
+architectures: 
+  - build-on: amd64
+    run-on: amd64
 
 parts:
   # This part installs the `desktop-launch` script which initialises desktop
@@ -67,6 +70,8 @@ parts:
       - python-gtk2
       - libxtst6
       - libcanberra-gtk-module
+      - libatk-adaptor
+      - libgail-common
     after:
       - desktop-gtk2
   fahviewer:
@@ -102,6 +107,8 @@ apps:
       - network
       - serial-port
       - raw-usb
+      - desktop
+      - desktop-legacy
     command: desktop-launch python $SNAP/usr/bin/FAHControl
   # This can be finalised later
   FAHViewer:
