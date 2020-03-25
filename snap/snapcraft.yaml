@@ -96,6 +96,7 @@ apps:
       - network
       - network-bind
       - opengl
+      - upower-observe
   FAHControl:
     environment:
       PYTHONPATH: "/usr/lib/python2.7/dist-packages:$SNAP/usr/lib/python2.7/dist-packages"
@@ -109,10 +110,23 @@ apps:
       - raw-usb
       - desktop
       - desktop-legacy
+      - opengl
+      - upower-observe
     command: desktop-launch python $SNAP/usr/bin/FAHControl
   # This can be finalised later
   FAHViewer:
     command: desktop-launch $SNAP/usr/bin/FAHViewer
+    plugs:
+      - x11
+      - unity7
+      - home
+      - network
+      - serial-port
+      - raw-usb
+      - desktop
+      - desktop-legacy
+      - opengl
+      - upower-observe
 
 plugs:
   gtk-2-engines:

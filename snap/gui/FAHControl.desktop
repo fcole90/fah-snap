@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=FAHControl
 Exec=folding-at-home-fcole90.FAHControl
-StartupNotify=True
+StartupNotify=true
 Terminal=false
 Type=Application
 Categories=Science;Biology;Education;;
