@@ -2,7 +2,7 @@
 
 **I am One in a Million**: Regardless if you are already folding or haven’t heard a word about 
 it before, we need your help to reach our goal – which is 1 million folders.
-##Start folding now
+**Start folding now**
 
 ## What is it?
 **Folding@home (FAH or F@h)** is a distributed computing project for simulating protein dynamics, 
