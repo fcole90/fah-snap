@@ -1,13 +1,17 @@
 name: folding-at-home
+title: Folding@Home
 base: core18
 version: '7.5.1'
 summary: Folding@home is a distributed computing project.
 description: |
- Folding@home is a distributed computing project using volunteered
- computer resources run by Pandegroup of Stanford University.
- This snap contains the console client which is used to download
- and run Folding@home work units, the 3D simulation viewer and the control
- application.
+ Folding@home (FAH or F@h) is a distributed computing project for simulating protein dynamics, including the process of
+ protein folding and the movements of proteins implicated in a variety of diseases. It brings together citizen 
+ scientists who volunteer to run simulations of protein dynamics on their personal computers. 
+ Insights from this data are helping scientists to better understand biology, and providing new opportunities for 
+ developing therapeutics.
+ 
+ This package contains the console client which is used to download  and run Folding@home work units, the 3D simulation 
+ viewer and the control application.
 
 grade: devel
 confinement: devmode 
@@ -51,14 +55,14 @@ parts:
     plugin: dump
     source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.5/fahclient_7.5.1_amd64.deb
     source-type: deb
-    stage-packages: [bzip2, zlib1g, libgl1-mesa-dri, ocl-icd-libopencl1]
+    stage-packages: [bzip2, zlib1g, libglu1-mesa, libgl1-mesa-dri, ocl-icd-libopencl1]
 
   fahcontrol:
     plugin: dump
     source: https://download.foldingathome.org/releases/public/release/fahcontrol/debian-stable-64bit/v7.5/fahcontrol_7.5.1-1_all.deb
     source-type: deb
     stage-packages: 
-      - python2
+      - python
       - python-gtk2
       - libxtst6
       - libcanberra-gtk-module
@@ -86,7 +90,7 @@ apps:
       - network
       - serial-port
       - raw-usb
-    command: desktop-launch $SNAP/usr/bin/FAHControl
+    command: desktop-launch python $SNAP/usr/bin/FAHControl
   # This can be finalised later
   FAHViewer:
     command: desktop-launch $SNAP/usr/bin/FAHViewer
@@ -108,3 +112,4 @@ plugs:
     interface: content
     target: $SNAP/data-dir/sounds
     default-provider: gtk-common-themes
+
