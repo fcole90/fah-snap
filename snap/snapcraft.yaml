@@ -91,7 +91,7 @@ apps:
   FAHClient:
     command: usr/bin/FAHClient --chdir $SNAP_USER_DATA
     daemon: simple
-    restart-condition: always
+    restart-condition: on-failure
     plugs:
       - network
       - network-bind
