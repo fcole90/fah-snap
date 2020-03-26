@@ -1,4 +1,4 @@
-*Snap package of Folding@Home*
+*Snap package of Folding@Home* [![Snap Status](https://build.snapcraft.io/badge/fcole90/fah-snap.svg)](https://build.snapcraft.io/user/fcole90/fah-snap)
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/folding-at-home-fcole90)
 
