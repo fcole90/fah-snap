@@ -1,3 +1,6 @@
+*Snap package of Folding@Home*
+
+
 # Folding@Home - Help research with distributed computing.
 
 **I am One in a Million**: Regardless if you are already folding or haven’t heard a word about 
@@ -13,6 +16,6 @@ for developing therapeutics.
 
 ## More info
 Folding@Home is run by Pandegroup of Stanford University. You can find more information on 
-our [website](https://foldingathome.org/about/).
+the Folding@Home [website](https://foldingathome.org/about/).
 
 
