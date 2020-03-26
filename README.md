@@ -1,4 +1,5 @@
 *Snap package of Folding@Home*
+
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/folding-at-home-fcole90)
 
 # Folding@Home - Help research with distributed computing.
