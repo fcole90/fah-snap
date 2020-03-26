@@ -66,6 +66,7 @@ parts:
       - libgl1-mesa-dri
       - ocl-icd-libopencl1
     override-prime: |
+      snapcraftctl prime
       ln -s /var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 /var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
 
   fahcontrol:
