@@ -14,7 +14,7 @@ description: |
  This package contains the console client which is used to download  and run Folding@home work units, the 3D simulation 
  viewer and the control application.
 
-grade: devel
+grade: stable
 confinement: strict
 architectures: 
   - build-on: amd64
@@ -86,6 +86,8 @@ parts:
       - libgl1-mesa-glx
       - libglu1-mesa
       - freeglut3
+    after:
+      - desktop-gtk2
 
 apps:
   FAHClient:

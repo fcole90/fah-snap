@@ -7,4 +7,4 @@ Terminal=false
 Type=Application
 Categories=Science;Biology;Education;;
 Comment=Folding@home Client Control
-Icon=${SNAP}/meta/gui/fah-logo.png
+Icon=${SNAP}/meta/gui/FAHControl.png

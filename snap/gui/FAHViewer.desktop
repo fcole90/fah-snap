@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=FAHViewer
+Exec=folding-at-home-fcole90.FAHViewer
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Education;Science;Biology;;
+Comment=Folding@home Client 3D Viewer
+Icon=${SNAP}/meta/gui/FAHViewer.png
