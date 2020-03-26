@@ -59,7 +59,14 @@ parts:
     plugin: dump
     source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.5/fahclient_7.5.1_amd64.deb
     source-type: deb
-    stage-packages: [bzip2, zlib1g, libglu1-mesa, libgl1-mesa-dri, ocl-icd-libopencl1]
+    stage-packages: 
+      - bzip2
+      - zlib1g
+      - libglu1-mesa
+      - libgl1-mesa-dri
+      - ocl-icd-libopencl1
+    override-prime: |
+      ln -s /var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 /var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
 
   fahcontrol:
     plugin: dump
@@ -74,6 +81,7 @@ parts:
       - libgail-common
     after:
       - desktop-gtk2
+      - fahclient
   fahviewer:
     plugin: dump
     source: https://download.foldingathome.org/releases/public/release/fahviewer/debian-stable-64bit/v7.5/fahviewer_7.5.1_amd64.deb
@@ -88,24 +96,25 @@ parts:
       - freeglut3
     after:
       - desktop-gtk2
+      - fahclient
 
 apps:
   FAHClient:
     command: usr/bin/FAHClient --chdir $SNAP_USER_DATA
     environment:
-      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/lib/snapd/hostfs/usr/lib/x86_64-linux-gnu/"
+      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     daemon: simple
     restart-condition: on-failure
     plugs:
       - network
       - network-bind
       - opengl
-      - upower-observe
+      - hardware-observe
   FAHControl:
     environment:
       PYTHONPATH: "/usr/lib/python2.7/dist-packages:$SNAP/usr/lib/python2.7/dist-packages"
       DISABLE_WAYLAND: "1"  # Fallback to XWayland if running in a Wayland session.
-      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/lib/snapd/hostfs/usr/lib/x86_64-linux-gnu/"
+      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     plugs:
       - x11
       - unity7
@@ -116,13 +125,13 @@ apps:
       - desktop
       - desktop-legacy
       - opengl
-      - upower-observe
+      - hardware-observe
     command: desktop-launch python $SNAP/usr/bin/FAHControl
   # This can be finalised later
   FAHViewer:
     command: desktop-launch $SNAP/usr/bin/FAHViewer
     environment:
-      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/lib/snapd/hostfs/usr/lib/x86_64-linux-gnu/"
+      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     plugs:
       - x11
       - unity7
@@ -133,7 +142,7 @@ apps:
       - desktop
       - desktop-legacy
       - opengl
-      - upower-observe
+      - hardware-observe
 
 plugs:
   gtk-2-engines:
