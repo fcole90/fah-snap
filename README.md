@@ -2,6 +2,14 @@
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/folding-at-home-fcole90)
 
+```
+sudo snap install folding-at-home-fcole90 --edge # Install
+snap connect folding-at-home-fcole90:hardware-observe # Allow checking your hardware
+snap services folding-at-home-fcole90.FAHClient # Check that the service is running correctly
+```
+
+See how to handle snap services: https://snapcraft.io/docs/service-management
+
 # Folding@Home - Help research with distributed computing.
 
 **I am One in a Million**: Regardless if you are already folding or haven’t heard a word about 
