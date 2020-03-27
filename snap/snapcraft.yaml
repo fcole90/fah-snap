@@ -67,7 +67,7 @@ parts:
       - ocl-icd-libopencl1
     override-prime: |
       snapcraftctl prime
-      ln -s usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
+      ln -rs usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
 
   fahcontrol:
     plugin: dump
