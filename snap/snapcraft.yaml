@@ -101,7 +101,7 @@ parts:
 
 apps:
   FAHClient:
-    command: usr/bin/FAHClient --chdir $SNAP_USER_DATA
+    command: usr/bin/FAHClient -v --chdir $SNAP_USER_DATA
     environment:
       LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
       # Mesa Libs for OpenGL support
