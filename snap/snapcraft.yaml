@@ -103,7 +103,7 @@ apps:
   FAHClient:
     command: usr/bin/FAHClient -v --chdir $SNAP_USER_DATA
     environment:
-      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:$SNAPCRAFT_ARCH_TRIPLET"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     daemon: simple
     plugs:
       - network
@@ -114,7 +114,7 @@ apps:
     environment:
       PYTHONPATH: "/usr/lib/python2.7/dist-packages:$SNAP/usr/lib/python2.7/dist-packages"
       DISABLE_WAYLAND: "1"  # Fallback to XWayland if running in a Wayland session.
-      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:$SNAPCRAFT_ARCH_TRIPLET"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     plugs:
       - x11
       - unity7
@@ -132,7 +132,7 @@ apps:
     command: desktop-launch $SNAP/usr/bin/FAHViewer
     environment:
       DISABLE_WAYLAND: "1"  # Fallback to XWayland if running in a Wayland session.
-      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:$SNAPCRAFT_ARCH_TRIPLET"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     plugs:
       - x11
       - unity7
