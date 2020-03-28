@@ -65,6 +65,8 @@ parts:
       - libglu1-mesa
       - libgl1-mesa-dri
       - ocl-icd-libopencl1
+    after:
+      - desktop-gtk2
     override-prime: |
       snapcraftctl prime
       ln -rs usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
@@ -101,7 +103,7 @@ parts:
 
 apps:
   FAHClient:
-    command: usr/bin/FAHClient -v --chdir $SNAP_USER_DATA
+    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_DATA
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     daemon: simple
@@ -109,6 +111,14 @@ apps:
       - network
       - network-bind
       - opengl
+      - x11
+      - unity7
+      - home
+      - network
+      - serial-port
+      - raw-usb
+      - desktop
+      - desktop-legacy
       - hardware-observe
   FAHControl:
     environment:
