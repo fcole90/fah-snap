@@ -114,7 +114,6 @@ apps:
       - x11
       - unity7
       - home
-      - network
       - serial-port
       - raw-usb
       - desktop
