@@ -3,7 +3,7 @@ title: Folding@Home
 icon: snap/gui/fah-logo.png
 base: core18
 version: '7.5.1'
-summary: Folding@home is a distributed computing project.
+summary: Folding at Home - Help research with distributed computing
 description: |
  Folding@home (FAH or F@h) is a distributed computing project for simulating protein dynamics, including the process of
  protein folding and the movements of proteins implicated in a variety of diseases. It brings together citizen 
@@ -11,8 +11,22 @@ description: |
  Insights from this data are helping scientists to better understand biology, and providing new opportunities for 
  developing therapeutics.
  
+ After intalling the package you need to allow Folding@Home to check your hardware. You can grant this permission with the command:
+ "snap connect folding-at-home-fcole90:hardware-observe" (without quotes)
+ 
  This package contains the console client which is used to download and run Folding@home work units, the 3D simulation 
  viewer and the control application.
+ 
+ More info Folding@Home is run by Pandegroup of Stanford University. You can find more information on the Folding@Home website: https://foldingathome.org
+ 
+ Usage You can use the FAHClient service, the applications FAHControl and FAHViewer, or the webclient at http://client.foldingathome.org/.
+
+ You can interact with FAHClient as a service, as described in the documentation on snap services: https://snapcraft.io/docs/service-management
+
+ Example:
+ $ snap services folding-at-home-fcole90.FAHClient
+ Service                            Startup  Current  Notes
+ folding-at-home-fcole90.FAHClient  enabled  active   -
 
 grade: stable
 confinement: strict
@@ -59,14 +73,18 @@ parts:
     plugin: dump
     source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.5/fahclient_7.5.1_amd64.deb
     source-type: deb
+    # Packages required to run the part
     stage-packages: 
       - bzip2
       - zlib1g
       - libglu1-mesa
       - libgl1-mesa-dri
       - ocl-icd-libopencl1
+    # This part should be created after..
     after:
       - desktop-gtk2
+    # Overrides the last step of the process to allow that after calling again prime, we can symlink a required library
+    # The library is a relative symbolic link, so the reference is relative to the file and we avoid issues
     override-prime: |
       snapcraftctl prime
       ln -rs usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
@@ -106,6 +124,8 @@ apps:
     command: usr/bin/FAHClient -v --chdir=$SNAP_USER_DATA
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
+    # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
+    # Simple indicates that the command calls the service (no forking)
     daemon: simple
     plugs:
       - network
@@ -120,6 +140,7 @@ apps:
       - desktop-legacy
       - hardware-observe
   FAHControl:
+    # Set required environment variables
     environment:
       PYTHONPATH: "/usr/lib/python2.7/dist-packages:$SNAP/usr/lib/python2.7/dist-packages"
       DISABLE_WAYLAND: "1"  # Fallback to XWayland if running in a Wayland session.
@@ -135,8 +156,8 @@ apps:
       - desktop-legacy
       - opengl
       - hardware-observe
+    # 'desktop-launch' sets up the environment to correctly launch the application for desktop working
     command: desktop-launch python $SNAP/usr/bin/FAHControl
-  # This can be finalised later
   FAHViewer:
     command: desktop-launch $SNAP/usr/bin/FAHViewer
     environment:
@@ -153,7 +174,6 @@ apps:
       - desktop-legacy
       - opengl
       - hardware-observe
-
 plugs:
   gtk-2-engines:
     interface: content
