@@ -120,8 +120,10 @@ parts:
       - fahclient
 
 apps:
-  clean: rm -rf $SNAP_USER_DATA/*
-  configure: FAHClient --configure
+  clean: 
+    command: rm -rf $SNAP_USER_DATA/*
+  configure: 
+    command: FAHClient --configure
   FAHClient:
     command: usr/bin/FAHClient# -v --chdir=$SNAP_USER_DATA
     environment:
