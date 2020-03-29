@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+# Check if the plug 'hardware-observe' is connected
+if snapctl is-connected hardware-observe; then
+  # exit status=0. logic when connected
+  # All good, the plug is connected
+else
+  # logic when not connected; note if this is run from hooks.
+  # printing to stdout/stderr is not visible to the user
+  # (unless the hook fails entirely with exit status > 0)
+  #"FAHClient needs to have 'hardware-observe' plugged in order to work but it is not connected"
+  #"Please, connect it with 'sudo snap connect folding-at-home-fcole90:hardware-observe'"
+  snapctl stop --disable $SNAP.FAHClient
+fi
