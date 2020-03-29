@@ -28,6 +28,7 @@ description: |
  Service                            Startup  Current  Notes
  folding-at-home-fcole90.FAHClient  enabled  active   -
 
+
 grade: stable
 confinement: strict
 architectures: 
