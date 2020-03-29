@@ -3,7 +3,8 @@
 # Check if the plug 'hardware-observe' is connected
 if snapctl is-connected hardware-observe; then
   # exit status=0. logic when connected
-  # All good, the plug is connected
+  echo "All good, the plug is connected"
+  
 else
   # logic when not connected; note if this is run from hooks.
   # printing to stdout/stderr is not visible to the user
