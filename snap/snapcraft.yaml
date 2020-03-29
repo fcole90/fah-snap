@@ -120,8 +120,10 @@ parts:
       - fahclient
 
 apps:
+  clean: rm -rf $SNAP_USER_DATA/*
+  configure: FAHClient --configure
   FAHClient:
-    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_DATA
+    command: usr/bin/FAHClient# -v --chdir=$SNAP_USER_DATA
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
