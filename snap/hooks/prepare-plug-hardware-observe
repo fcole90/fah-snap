@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+# Stop the client before connecting the plug
+snapctl stop $SNAP.FAHClient
