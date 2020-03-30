@@ -10,5 +10,5 @@ else
   # (unless the hook fails entirely with exit status > 0)
   #"FAHClient needs to have 'hardware-observe' plugged in order to work but it is not connected"
   #"Please, connect it with 'sudo snap connect folding-at-home-fcole90:hardware-observe'"
-  snapctl stop --disable $SNAP_NAME.FAHClient
+  snapctl stop --disable $SNAP_NAME.client
 fi
