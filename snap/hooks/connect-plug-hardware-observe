@@ -2,4 +2,3 @@
 
 # Restart the client after connecting the plug
 snapctl start --enable $SNAP_NAME.client
-$SNAP/usr/bin/FAHClient --send-pause
