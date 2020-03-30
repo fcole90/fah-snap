@@ -141,7 +141,7 @@ apps:
       - desktop-legacy
       - hardware-observe
   FAHClient:
-    command: usr/bin/FAHClient -v --chdir=$HOME
+    command: usr/bin/FAHClient -v --chdir=$HOME/../common
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
@@ -195,7 +195,7 @@ apps:
       - opengl
       - hardware-observe
   folding-at-home-fcole90:
-    command: usr/bin/FAHClient -v --chdir=$HOME
+    command: usr/bin/FAHClient -v --chdir=$HOME/../common
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
