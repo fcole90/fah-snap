@@ -121,10 +121,27 @@ parts:
       - fahclient
 
 apps:
-  clean: 
-    command: rm -rf $SNAP_USER_DATA/*
+  configure: 
+    command: usr/bin/FAHClient -v --chdir=$HOME --configure
+    environment:
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
+    # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
+    # Simple indicates that the command calls the service (no forking)
+    # daemon: simple
+    plugs:
+      - network
+      - network-bind
+      - opengl
+      - x11
+      - unity7
+      - home
+      - serial-port
+      - raw-usb
+      - desktop
+      - desktop-legacy
+      - hardware-observe
   FAHClient:
-    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_DATA
+    command: usr/bin/FAHClient -v --chdir=$HOME
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
@@ -178,7 +195,7 @@ apps:
       - opengl
       - hardware-observe
   folding-at-home-fcole90:
-    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_DATA
+    command: usr/bin/FAHClient -v --chdir=$HOME
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
