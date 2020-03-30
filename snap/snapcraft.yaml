@@ -43,7 +43,7 @@ parts:
   # It is copied straight from the snapcraft desktop helpers project. Please
   # periodically check the source for updates and copy the changes.
   #    https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
-  #
+  # 
   desktop-gtk2:
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     source-subdir: gtk
