@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
 # Restart the client after connecting the plug
-snapctl start $SNAP.FAHClient
+snapctl start folding-at-home-fcole90.FAHClient.FAHClient
