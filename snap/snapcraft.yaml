@@ -129,6 +129,7 @@ apps:
     # Simple indicates that the command calls the service (no forking)
     # daemon: simple
     plugs:
+      - browser-support
       - network
       - network-bind
       - opengl
@@ -159,6 +160,7 @@ apps:
       - desktop
       - desktop-legacy
       - hardware-observe
+      - browser-support
   FAHControl:
     # Set required environment variables
     environment:
@@ -176,6 +178,7 @@ apps:
       - desktop-legacy
       - opengl
       - hardware-observe
+      - browser-support
     # 'desktop-launch' sets up the environment to correctly launch the application for desktop working
     command: desktop-launch python $SNAP/usr/bin/FAHControl
   FAHViewer:
@@ -194,6 +197,7 @@ apps:
       - desktop-legacy
       - opengl
       - hardware-observe
+      - browser-support
   folding-at-home-fcole90:
     command: usr/bin/FAHClient -v --chdir $SNAP_COMMON
     environment:
@@ -213,6 +217,7 @@ apps:
       - desktop
       - desktop-legacy
       - hardware-observe
+      - browser-support
 plugs:
   gtk-2-engines:
     interface: content
