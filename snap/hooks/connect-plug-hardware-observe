@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
 # Restart the client after connecting the plug
-snapctl start --enable $SNAP_NAME.FAHClient
+snapctl start --enable $SNAP_NAME.client
