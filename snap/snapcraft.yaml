@@ -122,7 +122,7 @@ parts:
 
 apps:
   configure: 
-    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_COMMON --configure
+    command: usr/bin/FAHClient -v --chdir $SNAP_USER_COMMON/ --config $SNAP_USER_COMMON/config.xml --configure
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
@@ -141,7 +141,7 @@ apps:
       - desktop-legacy
       - hardware-observe
   client:
-    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_COMMON
+    command: usr/bin/FAHClient -v --chdir $SNAP_USER_COMMON/ --config $SNAP_USER_COMMON/config.xml
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
@@ -195,7 +195,7 @@ apps:
       - opengl
       - hardware-observe
   folding-at-home-fcole90:
-    command: usr/bin/FAHClient -v --chdir=$SNAP_USER_COMMON
+    command: usr/bin/FAHClient -v --chdir $SNAP_USER_COMMON/ --config $SNAP_USER_COMMON/config.xml
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
