@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
 # Stop the client before connecting the plug
-snapctl stop $SNAP.FAHClient
+snapctl stop folding-at-home-fcole90.FAHClient
