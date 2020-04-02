@@ -1,4 +1,6 @@
 #!/bin/sh -e
 
 # Restart the client after connecting the plug -
-snapctl start --enable $SNAP_NAME.client
+# snapctl start --enable $SNAP_NAME.client
+# snapctl stop $SNAP_NAME.client
+echo "ok"

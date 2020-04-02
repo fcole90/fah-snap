@@ -79,6 +79,7 @@ parts:
       - bzip2
       - zlib1g
       - libglu1-mesa
+      - libegl1-mesa
       - libgl1-mesa-dri
       - ocl-icd-libopencl1
     # This part should be created after..
@@ -86,9 +87,11 @@ parts:
       - desktop-gtk2
     # Overrides the last step of the process to allow that after calling again prime, we can symlink a required library
     # The library is a relative symbolic link, so the reference is relative to the file and we avoid issues
+    # We test if the symlink exists, as 
     override-prime: |
       snapcraftctl prime
-      ln -rs usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so
+      OPENGL_SYMLINK="usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so"
+      test ! -f "$OPENGL_SYMLINK" && ln -rs usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 "$OPENGL_SYMLINK" || echo "Found $OPENGL_SYMLINK, not linking"
 
   fahcontrol:
     plugin: dump
