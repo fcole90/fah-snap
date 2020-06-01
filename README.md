@@ -2,6 +2,8 @@
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/folding-at-home-fcole90)
 
+![Screenshot_from_2020-03-26_00-18-44 (1)](https://user-images.githubusercontent.com/1292230/83427711-d319dc80-a439-11ea-949f-95fafa805886.png)
+
 ## How can I install Folding at Home?
 ```
 sudo snap install folding-at-home-fcole90 --edge # Install
