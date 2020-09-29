@@ -2,7 +2,7 @@ name: folding-at-home-fcole90
 title: Folding@Home
 icon: snap/gui/fah-logo.png
 base: core18
-version: '7.5.1'
+version: '7.6'
 summary: Folding at Home - Help research with distributed computing
 description: |
  Folding@home (FAH or F@h) is a distributed computing project for simulating protein dynamics, including the process of
@@ -72,7 +72,7 @@ parts:
       - libibus-1.0-5
   fahclient:
     plugin: dump
-    source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.5/fahclient_7.5.1_amd64.deb
+    source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.6/latest.deb
     source-type: deb
     # Packages required to run the part
     stage-packages: 
