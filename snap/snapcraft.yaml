@@ -10,23 +10,6 @@ description: |
  scientists who volunteer to run simulations of protein dynamics on their personal computers. 
  Insights from this data are helping scientists to better understand biology, and providing new opportunities for 
  developing therapeutics.
- 
- After intalling the package you need to allow Folding@Home to check your hardware. You can grant this permission with the command:
- "snap connect folding-at-home-fcole90:hardware-observe" (without quotes)
- 
- This package contains the console client which is used to download and run Folding@home work units, the 3D simulation 
- viewer and the control application.
- 
- More info Folding@Home is run by Pandegroup of Stanford University. You can find more information on the Folding@Home website: https://foldingathome.org
- 
- Usage You can use the FAHClient service, the applications FAHControl and FAHViewer, or the webclient at http://client.foldingathome.org/.
-
- You can interact with FAHClient as a service, as described in the documentation on snap services: https://snapcraft.io/docs/service-management
-
- Example:
- $ snap services folding-at-home-fcole90.FAHClient
- Service                            Startup  Current  Notes
- folding-at-home-fcole90.FAHClient  enabled  active   -
 
 
 grade: stable
@@ -70,11 +53,15 @@ parts:
       - xdg-user-dirs
       - ibus-gtk
       - libibus-1.0-5
+  
+  # <--- Client (Background Daemon) --->
+  # This part extracts the client from the deb
+  # This is the background daemon
   fahclient:
     plugin: dump
     source: https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v7.6/latest.deb
     source-type: deb
-    # Packages required to run the part
+    # Packages required to run this part
     stage-packages: 
       - bzip2
       - zlib1g
@@ -82,10 +69,11 @@ parts:
       - libegl1-mesa
       - libgl1-mesa-dri
       - ocl-icd-libopencl1
-    # This part should be created after..
-    after:
-      - desktop-gtk2
-    # Overrides the last step of the process to allow that after calling again prime, we can symlink a required library
+    # This part should be created after we have the desktop part already setup
+    # after:
+    #   - desktop-gtk2
+
+    # Overrides the last step of the process, to allow that after calling again prime, we can symlink a required library.
     # The library is a relative symbolic link, so the reference is relative to the file and we avoid issues
     # We test if the symlink exists, as 
     override-prime: |
@@ -93,9 +81,10 @@ parts:
       OPENGL_SYMLINK="usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so"
       test ! -f "$OPENGL_SYMLINK" && ln -rs usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libOpenCL.so.1 "$OPENGL_SYMLINK" || echo "Found $OPENGL_SYMLINK, not linking"
 
+  # <--- Desktop frontend --->
   fahcontrol:
     plugin: dump
-    source: https://download.foldingathome.org/releases/public/release/fahcontrol/debian-stable-64bit/v7.5/fahcontrol_7.5.1-1_all.deb
+    source: https://download.foldingathome.org/releases/public/release/fahcontrol/debian-stable-64bit/debian-stable-64bit/v7.6/latest.deb
     source-type: deb
     stage-packages: 
       - python
@@ -107,9 +96,11 @@ parts:
     after:
       - desktop-gtk2
       - fahclient
+
+  # <--- Molecules Visualisations --->
   fahviewer:
     plugin: dump
-    source: https://download.foldingathome.org/releases/public/release/fahviewer/debian-stable-64bit/v7.5/fahviewer_7.5.1_amd64.deb
+    source: https://download.foldingathome.org/releases/public/release/fahviewer/debian-stable-64bit/debian-stable-64bit/v7.6/latest.deb
     source-type: deb
     stage-packages: 
       - libx11-6
@@ -124,6 +115,8 @@ parts:
       - fahclient
 
 apps:
+
+  # CLI command to configure the application
   configure: 
     command: usr/bin/FAHClient -v --chdir $SNAP_COMMON --configure
     environment:
@@ -144,6 +137,8 @@ apps:
       - desktop
       - desktop-legacy
       - hardware-observe
+  
+  # Run the daemon from CLI as a systemd daemon
   client:
     command: usr/bin/FAHClient -v --chdir $SNAP_COMMON
     environment:
@@ -163,6 +158,8 @@ apps:
       - desktop
       - desktop-legacy
       - hardware-observe
+  
+  # Run the Frontend
   FAHControl:
     # Set required environment variables
     environment:
@@ -183,6 +180,8 @@ apps:
       - browser-support
     # 'desktop-launch' sets up the environment to correctly launch the application for desktop working
     command: desktop-launch python $SNAP/usr/bin/FAHControl
+  
+  # Run the Visualisations
   FAHViewer:
     command: desktop-launch $SNAP/usr/bin/FAHViewer
     environment:
@@ -200,11 +199,12 @@ apps:
       - opengl
       - hardware-observe
       - browser-support
+  
+  # Run the client in user space
   folding-at-home-fcole90:
     command: usr/bin/FAHClient -v --chdir $SNAP_USER_COMMON
-    autostart: folding-at-home-fcole90.desktop
+    # autostart: folding-at-home-fcole90.desktop
     environment:
-    
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons
     # Simple indicates that the command calls the service (no forking)
@@ -222,6 +222,8 @@ apps:
       - desktop-legacy
       - hardware-observe
       - browser-support
+
+# What permissions does this snap need
 plugs:
   gtk-2-engines:
     interface: content
