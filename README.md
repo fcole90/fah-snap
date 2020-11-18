@@ -12,6 +12,7 @@ snap connect folding-at-home-fcole90:hardware-observe # Allow checking your hard
 The second command is needed in order for the application to access information on your hardware. It needs it to
 correctly detect your GPUs.
 
+<!--
 ## How can I use Folding at Home as a daemon?
 You can interact with the daemon service with:
 ```
@@ -26,12 +27,15 @@ See how to handle snap services: https://snapcraft.io/docs/service-management
 The daemon is started by systemd, and is owned by root. The data folder for this is defined by `$SNAP_COMMON`,
 which usually expands to `/var/snap/folding-at-home-fcole90/common`
 See more on this on https://snapcraft.io/docs/environment-variables
+-->
 
+<!--
 ## How can I use Folding at Home as a userspace service?
 If you are not using the daemon, you can either activate it or you can use the userspace service. You can run the userspace service launching `folding-at-home-fcole90` in your terminal. The data folder for this defined by `$SNAP_USER_COMMON`,
 which usually expands to `home/$USERNAME/snap/folding-at-home-fcole90/common`.
 See more on this on https://snapcraft.io/docs/environment-variables
 This is currently unintuitive, I'm working in my spare time on improving the user experience.
+-->
 
 ## How can I interact with the daemon or service with the GUI?
 You can just launch `FAHControl` from your applications. If it says that no client is running, you can activate it as either a daemon or user service. Follow the previous instructions on how to do that.
