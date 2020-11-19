@@ -29,11 +29,11 @@ after_failure:
 - sudo journalctl -u snapd
 
 - stage: deploy
-      if: repo = fcole90/fah-snap and branch = master and type = push
-      os: linux
-      deploy:
-        provider: snap
-        snap: folding-at-home-fcole90_*.snap
-        channel: stable
-        cleanup: false
-        skip_cleanup: true
+  if: repo = fcole90/fah-snap and branch = master and type = push
+  os: linux
+  deploy:
+    provider: snap
+    snap: folding-at-home-fcole90_*.snap
+    channel: stable
+    cleanup: false
+    skip_cleanup: true
