@@ -34,6 +34,6 @@ after_failure:
   deploy:
     provider: snap
     snap: folding-at-home-fcole90_*.snap
-    channel: stable
+    channel: ${SNAP_DEPLOY_TRACK:-latest}/stable
     cleanup: false
     skip_cleanup: true
