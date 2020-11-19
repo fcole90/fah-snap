@@ -1,1 +1,31 @@
-language: bash
+language: shell
+dist: xenial
+
+env:
+  global:
+    - LC_ALL: C.UTF-8
+    - LANG: C.UTF-8
+    - SNAPCRAFT_ENABLE_SILENT_REPORT: y
+    - SNAPCRAFT_BUILD_INFO: 1
+    #- SOURCE_TAG: vX.Y.Z
+
+addons:
+  snaps:
+   - name: snapcraft
+     channel: stable
+     confinement: classic
+   - name: docker
+     channel: stable
+
+script:
+ - sudo docker run -v $(pwd):/my-snap snapcore/snapcraft sh -c "apt update && cd /my-snap && snapcraft"
+ 
+ after_failure:
+  - sudo journalctl -u snapd
+  
+deploy:
+  provider: snap
+  snap: folding-at-home-fcole90_*.snap
+  channel: stable
+  cleanup: false
+  skip_cleanup: true
