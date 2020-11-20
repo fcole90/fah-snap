@@ -1,3 +1,5 @@
+# Inspired by https://github.com/Crascit/cmake-snap/blob/master/.travis.yml
+---
 language: shell
 dist: xenial
 os: linux
@@ -34,6 +36,6 @@ after_failure:
   deploy:
     provider: snap
     snap: folding-at-home-fcole90_*.snap
-    channel: - latest/stable
+    channel: stable
     cleanup: false
     skip_cleanup: true
