@@ -31,7 +31,7 @@ after_failure:
 - sudo journalctl -u snapd
 
 - stage: deploy
-  if: repo = fcole90/fah-snap and branch = master and type = push
+  if: repo = fcole90/fah-snap and branch = master
   os: linux
   deploy:
     provider: snap
