@@ -26,13 +26,17 @@ script:
   - sudo /snap/bin/lxd waitready
   - sudo /snap/bin/lxd init --auto
   - sg lxd -c snapcraft
+  - echo " --- Deploy ---"
+  - echo $SNAP_TOKEN | snapcraft login --with -
+  - snapcraft whoami
+  - snapcraft upload --release=stable folding-at-home-fcole90_*.snap
 
 after_failure:
 - sudo journalctl -u snapd
 
-- stage: deploy
+#- stage: deploy
   #if: repo = fcole90/fah-snap and branch = master
-  os: linux
+  #os: linux
   #deploy:
   #  provider: snap
   #  snap: folding-at-home-fcole90_*.snap
@@ -40,8 +44,4 @@ after_failure:
   #  edge: false
   #  channel: latest/stable
   #  cleanup: false
-  #  skip_cleanup: true
-  script: 
-    - echo $SNAP_TOKEN | snapcraft login --with -
-    - snapcraft whoami
-    - snapcraft upload --release=stable folding-at-home-fcole90_*.snap
+  #  skip_cleanup: true   
