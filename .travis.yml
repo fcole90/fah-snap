@@ -31,16 +31,18 @@ after_failure:
 - sudo journalctl -u snapd
 
 - stage: deploy
-  if: false and repo = fcole90/fah-snap and branch = master
+  if: repo = fcole90/fah-snap and branch = master
   os: linux
   deploy:
     provider: snap
     snap: folding-at-home-fcole90_*.snap
+    token: $SNAP_TOKEN
+    edge: false
     channel: latest/stable
     cleanup: false
     skip_cleanup: true
-  script: 
-    - $SNAP_TOKEN > token.txt
-    - snapcraft login --with token.txt
-    - snapcraft upload --release=stable folding-at-home-fcole90_*.snap
-    - rm -f token.txt
+  #script: 
+  #  - $SNAP_TOKEN > token.txt
+  #  - snapcraft login --with token.txt
+  #  - snapcraft upload --release=stable folding-at-home-fcole90_*.snap
+  #  - rm -f token.txt
