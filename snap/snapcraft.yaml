@@ -17,6 +17,7 @@ confinement: strict
 architectures: 
   - build-on: amd64
     run-on: amd64
+compression: lzo  # Better decompression performance 
 
 parts:
   # This part installs the `desktop-launch` script which initialises desktop
