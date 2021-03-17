@@ -19,9 +19,10 @@ jobs:
       - name: Configure LXD
         run: |
           sudo usermod --append --groups lxd $USER
-          sudo /snap/bin/lxd.migrate -yes
-          sudo /snap/bin/lxd waitready
-          sudo /snap/bin/lxd init --auto
+          
+          # sudo /snap/bin/lxd.migrate -yes
+          # sudo /snap/bin/lxd waitready
+          # sudo /snap/bin/lxd init --auto
           
       - name: Packages
         run: echo "OK" || sg lxd -c "sudo snapcraft"
