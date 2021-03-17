@@ -1,0 +1,17 @@
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+jobs:
+  packaging_snap:
+    runs-on: ubuntu-20.04
+    - name: Check out Git repository
+        uses: actions/checkout@v2
+
+    - name: Install Snapcraft
+      runs: snap --version
