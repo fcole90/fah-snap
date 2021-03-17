@@ -25,4 +25,4 @@ jobs:
           # sudo /snap/bin/lxd init --auto
           
       - name: Packages
-        run: echo "OK" || sg lxd -c "sudo snapcraft"
+        run: sg lxd -c "sudo snapcraft"
