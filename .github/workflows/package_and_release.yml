@@ -25,4 +25,4 @@ jobs:
           # sudo /snap/bin/lxd init --auto
           
       - name: Packages
-        run: sg lxd -c "sudo snapcraft"
+        run: sg lxd -c "snapcraft --use-lxd"
