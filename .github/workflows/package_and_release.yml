@@ -23,7 +23,7 @@ jobs:
           sudo /snap/bin/lxd waitready
           sudo /snap/bin/lxd init --auto
           
-      - name: Install Snapcraft in lxd
+      - name: Install Snapcraft in LXD
         run: sg lxd -c "sudo snap install snapcraft --classic"
       
       - name: Build Snap
