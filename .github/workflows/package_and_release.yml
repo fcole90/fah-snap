@@ -13,5 +13,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Snapcraft
-        run: snap --version
+      - name: Install LXD
+        run: snap install lxd
+      
+      - name: Configure LXD
+        run: >
+        usermod --append --groups lxd $USER
+        /snap/bin/lxd.migrate -yes
+        /snap/bin/lxd waitready
+        /snap/bin/lxd init --auto
+        sg lxd -c snapcraft
+      
+      - name: Packages
+        run: echo "OK"
