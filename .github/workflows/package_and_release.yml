@@ -22,7 +22,6 @@ jobs:
           sudo /snap/bin/lxd.migrate -yes
           sudo /snap/bin/lxd waitready
           sudo /snap/bin/lxd init --auto
-          sg lxd -c "sudo snapcraft"
-      
+          
       - name: Packages
-        run: echo "OK"
+        run: echo "OK" || sg lxd -c "sudo snapcraft"
