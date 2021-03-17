@@ -13,9 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Snapcraft with LXD
-        uses: samuelmeuli/action-snapcraft@v1
-        with:
-          use_lxd: true
-      - name: Build snap
-        run: sg lxd -c 'snapcraft --use-lxd'
+      - name: Install LXD
+        run: sudo snap install lxd
+      
+      - name: Configure LXD
+        run: |
+          sudo usermod --append --groups lxd $USER
+          sudo /snap/bin/lxd.migrate -yes
+          sudo /snap/bin/lxd waitready
+          sudo /snap/bin/lxd init --auto
+          
+      - name: Packages
+        run: sg lxd -c "snapcraft --use-lxd"
