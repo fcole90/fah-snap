@@ -34,7 +34,7 @@ jobs:
       
       - name: Snap Store Login
         run: |
-          echo $SNAP_TOKEN | snapcraft login --with -
+          echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
           snapcraft whoami
       - name: Snap Store Release
         run: snapcraft upload --release=stable folding-at-home-fcole90_*.snap
