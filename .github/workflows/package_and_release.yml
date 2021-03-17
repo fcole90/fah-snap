@@ -28,3 +28,13 @@ jobs:
       
       - name: Build Snap
         run: sg lxd -c "sudo snapcraft --use-lxd"
+      
+      - name: Check
+        run: ls
+      
+      - name: Snap Store Login
+        run: |
+          echo $SNAP_TOKEN | snapcraft login --with -
+          snapcraft whoami
+      - name: Snap Store Release
+        run: snapcraft upload --release=stable folding-at-home-fcole90_*.snap
