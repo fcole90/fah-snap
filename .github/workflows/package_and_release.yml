@@ -17,7 +17,7 @@ jobs:
         run: snap install lxd
       
       - name: Configure LXD
-        run: >
+        run: |
         usermod --append --groups lxd $USER
         /snap/bin/lxd.migrate -yes
         /snap/bin/lxd waitready
