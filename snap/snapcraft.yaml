@@ -1,8 +1,8 @@
 name: folding-at-home-fcole90
 title: Folding@Home
 icon: snap/gui/fah-logo.png
-base: core18
-version: '7.6-latest-snap2'
+base: core20
+version: '7.6.latest~snap3'
 summary: Folding at Home - Help research with distributed computing
 description: |
  Folding@home (FAH or F@h) is a distributed computing project for simulating protein dynamics, including the process of
@@ -20,6 +20,17 @@ architectures:
 compression: lzo  # Better decompression performance 
 
 parts:
+  python2:
+    plugin: nil
+    stage-packages:
+      - python2
+      - libpython2-stdlib 
+      - libpython2.7-minimal 
+      - libpython2.7-stdlib 
+      - python2-minimal 
+      - python2.7 
+      - python2.7-minimal
+
   # This part installs the `desktop-launch` script which initialises desktop
   # features such as fonts, themes and the XDG environment. It also installs
   # the GTK2 runtime libraries.
@@ -55,6 +66,25 @@ parts:
       - ibus-gtk
       - libibus-1.0-5
   
+  python-gtk2:
+    plugin: dump
+    source: https://launchpad.net/ubuntu/+source/pygtk/2.24.0-5.1ubuntu2/+build/13765865/+files/python-gtk2_2.24.0-5.1ubuntu2_amd64.deb
+    source-type: deb
+    after:
+      - desktop-gtk2
+      - python2
+    # Packages required to run this part
+    stage-packages: 
+      - libatk1.0-0
+      - libcairo2
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-0
+      - libgtk2.0-0
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - python-cairo
+      - python-gobject-2
+  
   # <--- Client (Background Daemon) --->
   # This part extracts the client from the deb
   # This is the background daemon
@@ -70,9 +100,6 @@ parts:
       - libegl1-mesa
       - libgl1-mesa-dri
       - ocl-icd-libopencl1
-    # This part should be created after we have the desktop part already setup
-    # after:
-    #   - desktop-gtk2
 
     # Overrides the last step of the process, to allow that after calling again prime, we can symlink a required library.
     # The library is a relative symbolic link, so the reference is relative to the file and we avoid issues
@@ -88,14 +115,14 @@ parts:
     source: https://download.foldingathome.org/releases/public/release/fahcontrol/debian-stable-64bit/v7.6/latest.deb
     source-type: deb
     stage-packages: 
-      - python
-      - python-gtk2
       - libxtst6
       - libcanberra-gtk-module
       - libatk-adaptor
       - libgail-common
     after:
       - desktop-gtk2
+      - python2
+      - python-gtk2
       - fahclient
 
   # <--- Molecules Visualisations --->
@@ -113,6 +140,8 @@ parts:
       - freeglut3
     after:
       - desktop-gtk2
+      - python2
+      - python-gtk2
       - fahclient
 
 apps:
@@ -180,11 +209,11 @@ apps:
       - hardware-observe
       - browser-support
     # 'desktop-launch' sets up the environment to correctly launch the application for desktop working
-    command: desktop-launch python $SNAP/usr/bin/FAHControl
+    command: bin/desktop-launch python2 $SNAP/usr/bin/FAHControl
   
   # Run the Visualisations
   FAHViewer:
-    command: desktop-launch $SNAP/usr/bin/FAHViewer
+    command: bin/desktop-launch $SNAP/usr/bin/FAHViewer
     environment:
       DISABLE_WAYLAND: 1  # Fallback to XWayland if running in a Wayland session.
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
