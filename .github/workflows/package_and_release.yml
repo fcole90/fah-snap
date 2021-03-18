@@ -71,7 +71,7 @@ on:
           echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
         
       - name: Can terminate
-          if: env.HAS_CVE == true
+          if: ${{ env.HAS_CVE == true }}
           # if: ${{ (github.event_name == 'schedule') && (env.HAS_CVE == true) }}
           run: exit 0
   #     - uses: actions/checkout@v2
