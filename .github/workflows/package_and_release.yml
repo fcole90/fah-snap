@@ -103,4 +103,4 @@ jobs:
 
       - name: Snap Store Release
         if: ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}
-        run: sudo snapcraft upload --release=stable ${{ SNAP_NAME }}_*.snap
+        run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}_*.snap
