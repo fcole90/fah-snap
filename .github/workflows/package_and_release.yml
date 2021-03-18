@@ -16,30 +16,31 @@ jobs:
     env: 
       SNAP_NAME: folding-at-home-fcole90
     steps:
-      - name: Install Review Tools
-        run: sudo snap install review-tools
+      # - name: Install Review Tools
+      #   run: sudo snap install review-tools
 
-      # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
-      - name: Check CVEs
-        if: ${{ github.event_name == 'schedule' }}
-        run: |
-          snap download ${{ env.SNAP_NAME }}
-          review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
-          echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
-          rm ${{ env.SNAP_NAME }}*.snap
+      # # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
+      # - name: Check CVEs
+      #   if: ${{ github.event_name == 'schedule' }}
+      #   run: |
+      #     snap download ${{ env.SNAP_NAME }}
+      #     review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
+      #     echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
+      #     rm ${{ env.SNAP_NAME }}*.snap
       
        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
       - name: Print Notices and Set HAS_CVE env variable
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          echo "Notices: ${{ env.CVEs }}"
-          echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
-          echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
-          echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
+          echo "HAS_CVE=true" >> $GITHUB_ENV
+        # echo "Notices: ${{ env.CVEs }}"
+        # echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
+        # echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
+        # echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
        
       - name: Decide if should rebuild
         run: |
-          echo "SHOULD_BUILD=$(${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }})" >> $GITHUB_ENV
+          echo '''SHOULD_BUILD=$(echo "${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}")'''' >> $GITHUB_ENV
       
       - name: Test
         run: |
@@ -60,7 +61,7 @@ jobs:
       
       # - name: Build Snap
       #   if: ${{ env.SHOULD_BUILD }}
-      #   run: sg lxd -c "sudo snapcraft --use-lxd"
+      #   run: sg lxd -c "$SNAPCRAFT_BUILD_INFO sudo snapcraft --use-lxd"
       
       # - name: Check Files
       #   run: ls
