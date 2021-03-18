@@ -60,6 +60,7 @@ jobs:
         # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
         run: |
           snap download ${{ env.SNAP_NAME }}
+          review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
           echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
       
       - name: Has CVE?
