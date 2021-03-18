@@ -54,7 +54,7 @@ jobs:
     env: 
       SNAP_NAME: folding-at-home-fcole90
     steps:
-      - name: Install Reviewer Tools
+      - name: Install Review Tools
         run: sudo snap install review-tools
 
       # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
