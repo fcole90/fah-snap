@@ -28,14 +28,19 @@ jobs:
         run: snap download folding-at-home-fcole90
         # if: ${{ github.event_name == 'schedule' }}
       
+      - name: Save Snap Revision
+        run: echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
+      
       - name: Check Vulnerabilities
-        run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV  # > cves.json
+        run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
 
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
           echo "${{ toJSON(env.CVEs) }}"
+          echo "${{ env.LAST_REVISION }}"
           echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
+          echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
 
   # packaging_snap:
   #   runs-on: ubuntu-18.04
