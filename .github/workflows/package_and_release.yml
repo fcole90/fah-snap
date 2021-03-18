@@ -29,7 +29,9 @@ jobs:
         # if: ${{ github.event_name == 'schedule' }}
       
       - name: Save Snap Revision
-        run: echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
+        run: |
+          touch folding-at-home-fcole90_112.snap
+          echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
       
       - name: Check Vulnerabilities
         # run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
