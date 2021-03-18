@@ -13,11 +13,14 @@ on:
 
 jobs:
   prJob:
+    env: 
+      SNAP_NAME: folding-at-home-fcole90
     name: Print info
     runs-on: ubuntu-latest
     steps:
       - name: Print GitHub event action
         run: |
+          echo "Building '${{ env.SNAP_NAME }}'"
           echo "${{toJSON(github.event_name)}}"
           echo "${{toJSON(github.event_name == 'schedule')}}"
     
@@ -30,7 +33,7 @@ jobs:
       
       - name: Save Snap Revision
         run: |
-          touch folding-at-home-fcole90_112.snap
+          touch ${{ env.SNAP_NAME }}_112.snap
           echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
       
       - name: Check Notices
