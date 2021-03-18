@@ -55,30 +55,34 @@ jobs:
     env: 
       SNAP_NAME: folding-at-home-fcole90
     steps:
-      - name: Install Reviewer Tools
-        run: sudo snap install review-tools
+      # - name: Install Reviewer Tools
+      #   run: sudo snap install review-tools
 
       - name: Check CVEs
         # if: ${{ github.event_name == 'schedule' }}
         # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
         run: |
-          snap download ${{ env.SNAP_NAME }}
-          review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
-          echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
+          echo "skip" || snap download ${{ env.SNAP_NAME }}
+          echo "skip" || review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
+          echo '''CVEs={   "folding-at-home-fcole90": {     "112": {} }''' >> $GITHUB_ENV
+        # echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
       
       - name: Has CVE?
         # if: ${{ github.event_name == 'schedule' }}
         # Print notices on screen and set 'HAS_CVE' to 'true' or 'false'
         run: |
           echo "Notices: ${{ env.CVEs }}"
-        # echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
-        # echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
-        # echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
+          echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
+          echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
+          echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
         
       - name: Can terminate
-          # if: ${{ github.event_name != 'schedule' }} #${{ env.HAS_CVE == true }}
-        if: ${{ (github.event_name == 'schedule') && (env.HAS_CVE == true) }}
+        if: ${{ github.event_name != 'schedule' && env.HAS_CVE == true }}
+        # if: ${{ (github.event_name == 'schedule') && (env.HAS_CVE == true) }}
         run: exit 0
+
+      - name: More jobs?
+        run: echo "This should not appear"
   #     - uses: actions/checkout@v2
 
   #     - name: Install LXD
