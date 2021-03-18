@@ -26,7 +26,7 @@ jobs:
       
       - name: Download snap
         run: snap download folding-at-home-fcole90
-        if: ${{ github.event_name == 'schedule' }}
+        # if: ${{ github.event_name == 'schedule' }}
       
       - name: Check Vulnerabilities
         run: echo "cves=`review-tools.check-notices folding-at-home-fcole90*.snap --with-cves`" >> $GITHUB_ENV
