@@ -50,7 +50,7 @@ jobs:
 
           echo "${{ env.CVEs_BIS }}"
           echo "${{ toJSON((fromJSON(env.CVEs_BIS).*.*)) }}"
-          echo "${{ contains(toJSON((fromJSON(env.CVEs_BIS).*.*)), '{}')' }}"
+          echo "${{ contains(toJSON((fromJSON(env.CVEs_BIS).*.*)), '{}') }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
