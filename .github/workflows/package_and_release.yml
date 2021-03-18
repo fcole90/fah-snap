@@ -76,10 +76,17 @@ jobs:
           echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
           echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
         
+      - name: test
+        if: ${{ github.event_name == 'push' && env.HAS_CVE == true }}
+        run: |
+          echo "is both: ${{ github.event_name == 'push' && env.HAS_CVE == true }}"
+          echo "has CVE: ${{ env.HAS_CVE == true }}"
+          echo "is push: ${{ github.event_name == 'push' }}"
 
       - uses: actions/checkout@v2
+
         # if: ${{ github.event_name == 'schedule' && env.HAS_CVE == true }}
-        if: ${{ github.event_name == 'push' && env.HAS_CVE == true }}
+        
 
   #     - name: Install LXD
   #       run: sudo snap install lxd
