@@ -44,14 +44,14 @@ jobs:
         run: |
           echo "${{ env.CVEs }}"
           echo "${{ toJSON((fromJSON(env.CVEs).*.*.*)) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs).*.*.*)[0]) }}"
+          echo "${{ toJSON((fromJSON(env.CVEs).*.*.*.*)[0]) }}"
           echo "${{ (fromJSON(env.CVEs).*.*.*)[0] != null  }}"
 
           echo "---------------------------------------------"
 
           echo "${{ env.CVEs_BIS }}"
           echo "${{ toJSON((fromJSON(env.CVEs_BIS).*.*.*)) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs_BIS).*.*.*)[0]) }}"
+          echo "${{ toJSON((fromJSON(env.CVEs_BIS).*.*.*.*)[0]) }}"
           echo "${{ (fromJSON(env.CVEs_BIS).*.*.*)[0] != null }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
