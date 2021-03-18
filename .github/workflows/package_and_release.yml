@@ -67,40 +67,52 @@ jobs:
           rm ${{ env.SNAP_NAME }}*.snap
       
        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
-      - name: Has CVE?
+      - name: Print Notices and Set HAS_CVE
         if: ${{ github.event_name == 'schedule' }}
         run: |
           echo "Notices: ${{ env.CVEs }}"
           echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
           echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
           echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
+       
+      - name: Decide if should rebuild
+        run: |
+          echo "SHOULD_BUILD=$(${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }})" >> $GITHUB_ENV
+      
+      - name: Test
+        run: |
+          echo "Needs rebuild: ${{ env.SHOULD_BUILD }}"
         
-      - uses: actions/checkout@v2
-        if: ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}
+      # - uses: actions/checkout@v2
+      #   if: ${{ env.SHOULD_BUILD }}
       
-      - name: Install and Configure LXD
-        if: ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}
-        run: |
-          sudo snap install lxd
-          sudo usermod --append --groups lxd $USER
-          sudo /snap/bin/lxd.migrate -yes
-          sudo /snap/bin/lxd waitready
-          sudo /snap/bin/lxd init --auto
-          sg lxd -c "sudo snap install snapcraft --classic"
+      # - name: Install and Configure LXD
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: |
+      #     sudo snap install lxd
+      #     sudo usermod --append --groups lxd $USER
+      #     sudo /snap/bin/lxd.migrate -yes
+      #     sudo /snap/bin/lxd waitready
+      #     sudo /snap/bin/lxd init --auto
+      #     sg lxd -c "sudo snap install snapcraft --classic"
       
-      - name: Build Snap
-        if: ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}
-        run: sg lxd -c "sudo snapcraft --use-lxd"
+      # - name: Build Snap
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: sg lxd -c "sudo snapcraft --use-lxd"
       
-      - name: Check Files
-        run: ls
+      # - name: Check Files
+      #   run: ls
       
-      - name: Snap Store Login
-        if: ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}
-        run: |
-          echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
-          snapcraft whoami
+      # - name: Snap Store Login
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: |
+      #     echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
+      #     snapcraft whoami
 
-      - name: Snap Store Release
-        if: ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}
-        run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}_*.snap
+      # - name: Snap Store Release
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}_*.snap
+      
+      # - name: Review Snap
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: sudo review-tools.snap-review folding-at-home-fcole90*.snap
