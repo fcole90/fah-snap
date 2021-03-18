@@ -72,8 +72,8 @@ on:
         
       - name: Can terminate
           # if: ${{ github.event_name != 'schedule' }} #${{ env.HAS_CVE == true }}
-          # if: ${{ (github.event_name == 'schedule') && (env.HAS_CVE == true) }}
-          run: exit 0
+        if: ${{ (github.event_name == 'schedule') && (env.HAS_CVE == true) }}
+        run: exit 0
   #     - uses: actions/checkout@v2
 
   #     - name: Install LXD
