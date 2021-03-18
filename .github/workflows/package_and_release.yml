@@ -46,6 +46,8 @@ jobs:
           echo "${{ toJSON(fromJSON(env.CVEs))[0] }}"
           echo "${{ toJSON((fromJSON(env.CVEs)[0].*)) }}"
 
+          echo "---------------------------------------------"
+
           echo "${{ env.CVEs_BIS }}"
           echo "${{ toJSON(fromJSON(env.CVEs_BIS)) }}"
           echo "${{ toJSON((fromJSON(env.CVEs_BIS).*)) }}"
