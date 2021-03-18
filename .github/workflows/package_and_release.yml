@@ -29,7 +29,7 @@ jobs:
         # if: ${{ github.event_name == 'schedule' }}
       
       - name: Check Vulnerabilities
-        run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g') >> $GITHUB_ENV  # > cves.json
+        run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV  # > cves.json
 
       - name: Checks
         run: |
