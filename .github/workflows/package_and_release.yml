@@ -33,7 +33,7 @@ jobs:
 
       - name: Checks
         run: |
-          echo "${{ env.cves }}"
+          echo "${{ fromJSON(`cat cves.json`) }}"
           echo "${{ env.cves.folding-at-home-fcole90 }}"
 
   # packaging_snap:
