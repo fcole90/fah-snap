@@ -43,8 +43,9 @@ jobs:
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
-          echo "${{ toJSON(fromJSON(env.CVEs))[0] }}"
-          echo "${{ toJSON((fromJSON(env.CVEs)[0].*)) }}"
+          echo "${{ toJSON(fromJSON(env.CVEs)).folding-at-home-fcole90 }}"
+          echo "${{ toJSON(fromJSON(env.CVEs)).*}}"
+          echo "${{ toJSON((fromJSON(env.CVEs).*.*)) }}"
 
           echo "---------------------------------------------"
 
