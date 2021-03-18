@@ -35,7 +35,7 @@ jobs:
         # run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
 
         run: |
-          echo '''"CVEs={   "folding-at-home-fcole90": {     "112": {}   } }"''' >> $GITHUB_ENV
+          echo '''CVEs={   "folding-at-home-fcole90": {     "112": {}   } }''' >> $GITHUB_ENV
 
       - name: Checks
         run: |
