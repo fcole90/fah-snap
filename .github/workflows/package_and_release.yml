@@ -43,8 +43,8 @@ jobs:
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
-          echo "${{ toJSON(fromJSON(env.CVEs)) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs).*)) }}"
+          echo "${{ toJSON(fromJSON(env.CVEs))[0] }}"
+          echo "${{ toJSON((fromJSON(env.CVEs)[0].*)) }}"
 
           echo "${{ env.CVEs_BIS }}"
           echo "${{ toJSON(fromJSON(env.CVEs_BIS)) }}"
