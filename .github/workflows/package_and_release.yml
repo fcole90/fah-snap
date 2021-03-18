@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "${{ env.CVEs }}"
           echo "${{ toJSON((fromJSON(env.CVEs).*.*.*)) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs).*.*.*)[0] }}"
+          echo "${{ toJSON((fromJSON(env.CVEs).*.*.*)[0]) }}"
           echo "${{ (fromJSON(env.CVEs).*.*.*)[0] != null  }}"
 
           echo "---------------------------------------------"
