@@ -55,6 +55,9 @@ jobs:
     env: 
       SNAP_NAME: folding-at-home-fcole90
     steps:
+      - name: Install Reviewer Tools
+        run: sudo snap install review-tools
+
       - name: Check CVEs
         # if: ${{ github.event_name == 'schedule' }}
         # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
