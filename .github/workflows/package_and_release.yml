@@ -11,7 +11,7 @@ on:
   # # - cron:  '0 0 */15 * *'
   # - cron:  '*/5 * * * *'
 
-# jobs:
+jobs:
 #   prJob:
 #     env: 
 #       SNAP_NAME: folding-at-home-fcole90
