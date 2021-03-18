@@ -11,44 +11,6 @@ on:
   - cron:  '*/5 * * * *'
 
 jobs:
-#   prJob:
-#     env: 
-#       SNAP_NAME: folding-at-home-fcole90
-#     name: Print info
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Print GitHub event action
-#         run: |
-#           echo "Building '${{ env.SNAP_NAME }}'"
-#           echo "${{toJSON(github.event_name)}}"
-#           echo "${{toJSON(github.event_name == 'schedule')}}"
-    
-#       # - name: Install Review Tools Snap
-#       #   run: sudo snap install review-tools
-      
-      
-      
-#       - name: Save Snap Revision
-#         run: |
-#           touch ${{ env.SNAP_NAME }}_112.snap
-#           echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
-      
-#       - name: Check Notices
-#         # run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
-
-#         run: |
-#           echo '''CVEs={   "folding-at-home-fcole90": {     "112": { "libglib2.0-0": ["4759-1", "4764-1" ]}   } }''' >> $GITHUB_ENV
-
-#       - name: Has CVE?
-#         run: |
-#           echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
-#           echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
-#           echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
-
-#         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
-#         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
-#         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
-
   packaging_snap:
     runs-on: ubuntu-18.04
     env: 
@@ -61,13 +23,13 @@ jobs:
       - name: Check CVEs
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          echo "skip" || snap download ${{ env.SNAP_NAME }}
-          echo "skip" || review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
+          snap download ${{ env.SNAP_NAME }}
+          review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
           echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
           rm ${{ env.SNAP_NAME }}*.snap
       
        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
-      - name: Print Notices and Set HAS_CVE
+      - name: Print Notices and Set HAS_CVE env variable
         if: ${{ github.event_name == 'schedule' }}
         run: |
           echo "Notices: ${{ env.CVEs }}"
@@ -102,6 +64,10 @@ jobs:
       
       # - name: Check Files
       #   run: ls
+
+      # - name: Review Snap
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: sudo review-tools.snap-review folding-at-home-fcole90*.snap
       
       # - name: Snap Store Login
       #   if: ${{ env.SHOULD_BUILD }}
@@ -113,6 +79,4 @@ jobs:
       #   if: ${{ env.SHOULD_BUILD }}
       #   run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}_*.snap
       
-      # - name: Review Snap
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: sudo review-tools.snap-review folding-at-home-fcole90*.snap
+ 
