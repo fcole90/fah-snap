@@ -43,12 +43,12 @@ jobs:
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
-          echo "${{ env.CVEs_BIS }}"
           echo "${{ toJSON(fromJSON(env.CVEs)) }}"
+          echo "${{ toJSON((fromJSON(env.CVEs).*)) }}"
+
+          echo "${{ env.CVEs_BIS }}"
           echo "${{ toJSON(fromJSON(env.CVEs_BIS)) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs).*)[0]) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs_BIS).*)[0]) }}"
-          echo "${{ env.LAST_REVISION }}"
+          echo "${{ toJSON((fromJSON(env.CVEs_BIS).*)) }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
