@@ -1,4 +1,5 @@
 *Snap package of Folding@Home*
+[![.github/workflows/package_and_release.yml](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml/badge.svg)](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml)
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/folding-at-home-fcole90)
 
