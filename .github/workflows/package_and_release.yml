@@ -44,8 +44,8 @@ jobs:
         run: |
           echo "${{ env.CVEs }}"
           echo "${{ toJSON(fromJSON(env.CVEs)) }}"
-          echo "${{ toJSON((fromJSON(env.CVEs).*.*)[0]) }}"
-          echo "${{ toJSON((fromJSON(env.CVE_BISs).*.*)[0]) }}"
+          echo "${{ toJSON((fromJSON(env.CVEs).*)[0]) }}"
+          echo "${{ toJSON((fromJSON(env.CVE_BISs).*)[0]) }}"
           echo "${{ env.LAST_REVISION }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
