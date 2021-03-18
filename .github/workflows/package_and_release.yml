@@ -29,12 +29,13 @@ jobs:
         # if: ${{ github.event_name == 'schedule' }}
       
       - name: Check Vulnerabilities
-        run: review-tools.check-notices folding-at-home-fcole90*.snap --with-cves > cves.json
+        run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves)" >> $GITHUB_ENV  # > cves.json
 
       - name: Checks
         run: |
-          echo "${{ fromJSON(`cat cves.json`) }}"
-          echo "${{ env.cves.folding-at-home-fcole90 }}"
+          echo "${{ env.CVEs }}"
+          echo "${{ toJSON(env.CVEs) }}"
+          echo "${{ env.CVEs.folding-at-home-fcole90 }}"
 
   # packaging_snap:
   #   runs-on: ubuntu-18.04
