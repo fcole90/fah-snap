@@ -19,6 +19,8 @@ jobs:
       - name: Print GitHub event action
         run: |
           echo "${{toJSON(github.event)}}"
+          echo "${{toJSON(github.event_name)}}"
+          echo "${{toJSON(github.event_name == 'schedule')}}"
 
   # packaging_snap:
   #   runs-on: ubuntu-18.04
