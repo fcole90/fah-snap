@@ -41,10 +41,8 @@ jobs:
 
       - name: Has CVE?
         run: |
-          echo '''HAS_CVE={   "folding-at-home-fcole90": {     "112": { "libglib2.0-0": ["4759-1", "4764-1" ]}   } }''' >> $GITHUB_ENV
-        run: |
           echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
-          echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
+          echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
           echo "Has CVE? ${{ env.HAS_CVE }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
