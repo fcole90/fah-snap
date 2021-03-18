@@ -42,8 +42,8 @@ jobs:
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
-          echo "${{ toJSON(env.CVEs) }}"
-          echo "${{ join(fromJSON(env.CVEs).*) }}"
+          echo "${{ toJSON(fromJSON(env.CVEs)) }}"
+          echo "${{ fromJSON(join(fromJSON(env.CVEs).*)) }}"
           echo "${{ env.LAST_REVISION }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
