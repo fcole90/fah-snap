@@ -49,8 +49,8 @@ jobs:
           echo "Needs rebuild: ${{ env.SHOULD_BUILD == 'true' }}"
           echo "Needs rebuild: ${{ env.SHOULD_BUILD || false }}"
         
-      # - uses: actions/checkout@v2
-      #   if: ${{ env.SHOULD_BUILD }}
+      - uses: actions/checkout@v2
+        if: ${{ env.SHOULD_BUILD }}
       
       # - name: Install and Configure LXD
       #   if: ${{ env.SHOULD_BUILD }}

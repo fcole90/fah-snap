@@ -1,7 +1,8 @@
 *Snap package of Folding@Home*
-[![.github/workflows/package_and_release.yml](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml/badge.svg)](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml)
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/folding-at-home-fcole90)
+
+**Builds:** [![.github/workflows/package_and_release.yml](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml/badge.svg)](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml)
 
 ![Screenshot_from_2020-03-26_00-18-44 (1)](https://user-images.githubusercontent.com/1292230/83427711-d319dc80-a439-11ea-949f-95fafa805886.png)
 
