@@ -11,50 +11,69 @@ on:
   # # - cron:  '0 0 */15 * *'
   # - cron:  '*/5 * * * *'
 
-jobs:
-  prJob:
+# jobs:
+#   prJob:
+#     env: 
+#       SNAP_NAME: folding-at-home-fcole90
+#     name: Print info
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Print GitHub event action
+#         run: |
+#           echo "Building '${{ env.SNAP_NAME }}'"
+#           echo "${{toJSON(github.event_name)}}"
+#           echo "${{toJSON(github.event_name == 'schedule')}}"
+    
+#       # - name: Install Review Tools Snap
+#       #   run: sudo snap install review-tools
+      
+      
+      
+#       - name: Save Snap Revision
+#         run: |
+#           touch ${{ env.SNAP_NAME }}_112.snap
+#           echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
+      
+#       - name: Check Notices
+#         # run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
+
+#         run: |
+#           echo '''CVEs={   "folding-at-home-fcole90": {     "112": { "libglib2.0-0": ["4759-1", "4764-1" ]}   } }''' >> $GITHUB_ENV
+
+#       - name: Has CVE?
+#         run: |
+#           echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
+#           echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
+#           echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
+
+#         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
+#         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
+#         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
+
+  packaging_snap:
+    runs-on: ubuntu-18.04
     env: 
       SNAP_NAME: folding-at-home-fcole90
-    name: Print info
-    runs-on: ubuntu-latest
     steps:
-      - name: Print GitHub event action
-        run: |
-          echo "Building '${{ env.SNAP_NAME }}'"
-          echo "${{toJSON(github.event_name)}}"
-          echo "${{toJSON(github.event_name == 'schedule')}}"
-    
-      # - name: Install Review Tools Snap
-      #   run: sudo snap install review-tools
-      
-      # - name: Download snap
-      #   run: snap download folding-at-home-fcole90
+      - name: Check CVEs
         # if: ${{ github.event_name == 'schedule' }}
-      
-      - name: Save Snap Revision
+        # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
         run: |
-          touch ${{ env.SNAP_NAME }}_112.snap
-          echo "LAST_REVISION=$(ls folding-at-home-fcole90*.snap | sed -E 's/folding-at-home-fcole90_//g' | sed -E 's/.snap//g')" >> $GITHUB_ENV
+          snap download ${{ env.SNAP_NAME }}
+          echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
       
-      - name: Check Notices
-        # run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
-
-        run: |
-          echo '''CVEs={   "folding-at-home-fcole90": {     "112": { "libglib2.0-0": ["4759-1", "4764-1" ]}   } }''' >> $GITHUB_ENV
-
       - name: Has CVE?
+        # if: ${{ github.event_name == 'schedule' }}
+        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false'
         run: |
           echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
           echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
           echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
-
-        # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
-        # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
-        # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
-
-  # packaging_snap:
-  #   runs-on: ubuntu-18.04
-  #   steps:
+        
+      - name: Can terminate
+          if: ${{ env.HAS_CVE == true }}
+          # if: ${{ (github.event_name == 'schedule') && (env.HAS_CVE == true) }}
+          run: exit 0
   #     - uses: actions/checkout@v2
 
   #     - name: Install LXD
