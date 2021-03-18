@@ -6,10 +6,10 @@ on:
   pull_request:
     branches: [master]
     types: [opened, synchronize]
-  schedule:
-  # * is a special character in YAML so you have to quote this string
-  # - cron:  '0 0 */15 * *'
-  - cron:  '*/5 * * * *'
+  # schedule:
+  # # * is a special character in YAML so you have to quote this string
+  # # - cron:  '0 0 */15 * *'
+  # - cron:  '*/5 * * * *'
 
 jobs:
   prJob:
@@ -29,7 +29,7 @@ jobs:
         # if: ${{ github.event_name == 'schedule' }}
       
       - name: Check Vulnerabilities
-        run: echo "cves=toJSON(`review-tools.check-notices folding-at-home-fcole90*.snap --with-cves`)" >> $GITHUB_ENV
+        run: review-tools.check-notices folding-at-home-fcole90*.snap --with-cves > cves.json
 
       - name: Checks
         run: |
