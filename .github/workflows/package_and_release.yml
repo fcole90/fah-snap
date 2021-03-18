@@ -34,15 +34,15 @@ jobs:
       - name: Check Vulnerabilities
         # run: echo "CVEs=$(review-tools.check-notices folding-at-home-fcole90*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
 
-        run: '''echo "CVEs={   "folding-at-home-fcole90": {     "112": {}   } }"'''
+        run: echo "CVEs={   "folding-at-home-fcole90": {     "112": {}   } }"'''
 
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
           echo "${{ toJSON(env.CVEs) }}"
           echo "${{ env.LAST_REVISION }}"
-          echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
-          echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
+          # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
+          # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
           # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
 
   # packaging_snap:
