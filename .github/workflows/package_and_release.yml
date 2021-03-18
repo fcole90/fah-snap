@@ -12,15 +12,29 @@ on:
   - cron:  '*/5 * * * *'
 
 jobs:
-  prJob:    
+  prJob:
     name: Print info
     runs-on: ubuntu-latest
     steps:
       - name: Print GitHub event action
         run: |
-          echo "${{toJSON(github.event)}}"
           echo "${{toJSON(github.event_name)}}"
           echo "${{toJSON(github.event_name == 'schedule')}}"
+    
+      - name: Install Review Tools Snap
+        run: sudo snap install review-tools
+      
+      - name: Download snap
+        run: snap download folding-at-home-fcole90
+        if: ${{ github.event_name == 'schedule' }}
+      
+      - name: Check Vulnerabilities
+        run: echo "cves=`review-tools.check-notices folding-at-home-fcole90*.snap --with-cves`" >> $GITHUB_ENV
+
+      - name: Checks
+        run: |
+          echo "${{ env.cves }}"
+          echo "${{ env.cves.folding-at-home-fcole90 }}"
 
   # packaging_snap:
   #   runs-on: ubuntu-18.04
