@@ -6,36 +6,47 @@ on:
   pull_request:
     branches: [master]
     types: [opened, synchronize]
+  schedule:
+  # * is a special character in YAML so you have to quote this string
+  - cron:  '0 0 */15 * *'
 
 jobs:
-  packaging_snap:
-    runs-on: ubuntu-18.04
+  prJob:    
+    name: Print info
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install LXD
-        run: sudo snap install lxd
-      
-      - name: Configure LXD
+      - name: Print GitHub event action
         run: |
-          sudo usermod --append --groups lxd $USER
-          sudo /snap/bin/lxd.migrate -yes
-          sudo /snap/bin/lxd waitready
-          sudo /snap/bin/lxd init --auto
+          echo "${{ github.event.action }}"
+
+  # packaging_snap:
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Install LXD
+  #       run: sudo snap install lxd
+      
+  #     - name: Configure LXD
+  #       run: |
+  #         sudo usermod --append --groups lxd $USER
+  #         sudo /snap/bin/lxd.migrate -yes
+  #         sudo /snap/bin/lxd waitready
+  #         sudo /snap/bin/lxd init --auto
           
-      - name: Install Snapcraft in LXD
-        run: sg lxd -c "sudo snap install snapcraft --classic"
+  #     - name: Install Snapcraft in LXD
+  #       run: sg lxd -c "sudo snap install snapcraft --classic"
       
-      - name: Build Snap
-        run: sg lxd -c "sudo snapcraft --use-lxd"
+  #     - name: Build Snap
+  #       run: sg lxd -c "sudo snapcraft --use-lxd"
       
-      - name: Check Files
-        run: ls
+  #     - name: Check Files
+  #       run: ls
       
-      - name: Snap Store Login
-        run: |
-          echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
-          snapcraft whoami
+  #     - name: Snap Store Login
+  #       run: |
+  #         echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
+  #         snapcraft whoami
 
-      - name: Snap Store Release
-        run: sudo snapcraft upload --release=stable folding-at-home-fcole90_*.snap
+  #     - name: Snap Store Release
+  #       run: sudo snapcraft upload --release=stable folding-at-home-fcole90_*.snap
