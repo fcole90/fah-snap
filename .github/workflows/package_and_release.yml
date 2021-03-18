@@ -64,7 +64,7 @@ jobs:
         run: |
           echo "skip" || snap download ${{ env.SNAP_NAME }}
           echo "skip" || review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
-          echo '''CVEs={   "folding-at-home-fcole90": {     "112": {} }''' >> $GITHUB_ENV
+          echo '''CVEs={ "folding-at-home-fcole90": {     "112": {} } }''' >> $GITHUB_ENV
         # echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
       
       - name: Has CVE?
