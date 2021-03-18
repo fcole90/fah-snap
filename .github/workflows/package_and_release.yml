@@ -41,9 +41,10 @@ jobs:
           echo "${{ env.CVEs }}"
           echo "${{ toJSON(env.CVEs) }}"
           echo "${{ env.LAST_REVISION }}"
-          # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
-          # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
-          # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
+
+        # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
+        # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
+        # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.(env.LAST_REVISION)}}"
 
   # packaging_snap:
   #   runs-on: ubuntu-18.04
