@@ -45,6 +45,9 @@ jobs:
       - name: Test
         run: |
           echo "Needs rebuild: ${{ env.SHOULD_BUILD }}"
+          echo "Needs rebuild: ${{ env.SHOULD_BUILD == true }}"
+          echo "Needs rebuild: ${{ env.SHOULD_BUILD == 'true' }}"
+          echo "Needs rebuild: ${{ env.SHOULD_BUILD || false }}"
         
       # - uses: actions/checkout@v2
       #   if: ${{ env.SHOULD_BUILD }}
