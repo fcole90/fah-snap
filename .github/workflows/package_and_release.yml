@@ -16,27 +16,26 @@ jobs:
     env: 
       SNAP_NAME: folding-at-home-fcole90
     steps:
-      # - name: Install Review Tools
-      #   run: sudo snap install review-tools
+      - name: Install Review Tools
+        run: sudo snap install review-tools
 
-      # # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
-      # - name: Check CVEs
-      #   if: ${{ github.event_name == 'schedule' }}
-      #   run: |
-      #     snap download ${{ env.SNAP_NAME }}
-      #     review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
-      #     echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
-      #     rm ${{ env.SNAP_NAME }}*.snap
+      # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
+      - name: Check CVEs
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          snap download ${{ env.SNAP_NAME }}
+          review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
+          echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
+          rm ${{ env.SNAP_NAME }}*.snap
       
        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
       - name: Print Notices and Set HAS_CVE env variable
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          echo "HAS_CVE=true" >> $GITHUB_ENV
-        # echo "Notices: ${{ env.CVEs }}"
-        # echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
-        # echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
-        # echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
+          echo "Notices: ${{ env.CVEs }}"
+          echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
+          echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
+          echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
        
       - name: Decide if should rebuild
         run: |
@@ -52,35 +51,33 @@ jobs:
       - uses: actions/checkout@v2
         if: ${{ env.SHOULD_BUILD }}
       
-      # - name: Install and Configure LXD
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: |
-      #     sudo snap install lxd
-      #     sudo usermod --append --groups lxd $USER
-      #     sudo /snap/bin/lxd.migrate -yes
-      #     sudo /snap/bin/lxd waitready
-      #     sudo /snap/bin/lxd init --auto
-      #     sg lxd -c "sudo snap install snapcraft --classic"
+      - name: Install and Configure LXD and Snapcraft
+        if: ${{ env.SHOULD_BUILD }}
+        run: |
+          sudo snap install lxd
+          sudo usermod --append --groups lxd $USER
+          sudo /snap/bin/lxd.migrate -yes
+          sudo /snap/bin/lxd waitready
+          sudo /snap/bin/lxd init --auto
+          sg lxd -c "sudo snap install snapcraft --classic"
       
-      # - name: Build Snap
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: sg lxd -c "$SNAPCRAFT_BUILD_INFO sudo snapcraft --use-lxd"
+      - name: Build Snap
+        if: ${{ env.SHOULD_BUILD }}
+        run: sg lxd -c "$SNAPCRAFT_BUILD_INFO sudo snapcraft --use-lxd"
       
-      # - name: Check Files
-      #   run: ls
+      - name: Check Files
+        run: ls
 
-      # - name: Review Snap
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: sudo review-tools.snap-review folding-at-home-fcole90*.snap
+      - name: Review Snap
+        if: ${{ env.SHOULD_BUILD }}
+        run: sudo review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
       
-      # - name: Snap Store Login
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: |
-      #     echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
-      #     snapcraft whoami
+      - name: Snap Store Login
+        if: ${{ env.SHOULD_BUILD }}
+        run: |
+          echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
+          snapcraft whoami
 
-      # - name: Snap Store Release
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}_*.snap
-      
- 
+      - name: Snap Store Release
+        if: ${{ env.SHOULD_BUILD }}
+        run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}*.snap
