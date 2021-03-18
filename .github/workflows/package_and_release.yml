@@ -38,12 +38,14 @@ jobs:
 
         run: |
           echo '''CVEs={   "folding-at-home-fcole90": {     "112": { "libglib2.0-0": ["4759-1", "4764-1" ]}   } }''' >> $GITHUB_ENV
+          echo '''CVEs_BIS={   "folding-at-home-fcole90": {     "112": {}   } }''' >> $GITHUB_ENV
 
       - name: Checks
         run: |
           echo "${{ env.CVEs }}"
           echo "${{ toJSON(fromJSON(env.CVEs)) }}"
           echo "${{ toJSON((fromJSON(env.CVEs).*.*)[0]) }}"
+          echo "${{ toJSON((fromJSON(env.CVE_BISs).*.*)[0]) }}"
           echo "${{ env.LAST_REVISION }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
