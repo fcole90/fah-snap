@@ -6,9 +6,8 @@ on:
     branches: [master]
     types: [opened, synchronize]
   schedule:
-  # # * is a special character in YAML so you have to quote this string
-  # # - cron:  '0 0 */15 * *'
-  - cron:  '*/2 * * * *'
+  # * is a special character in YAML so you have to quote this string
+  - cron:  '0 */12 * * *'
 
 jobs:
   packaging_snap:
@@ -68,9 +67,9 @@ jobs:
       - name: Check Files
         run: ls
 
-      - name: Review Snap
-        if: ${{ env.SHOULD_BUILD }}
-        run: sudo review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
+      # - name: Review Snap
+      #   if: ${{ env.SHOULD_BUILD }}
+      #   run: review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
       
       - name: Snap Store Login
         if: ${{ env.SHOULD_BUILD }}
