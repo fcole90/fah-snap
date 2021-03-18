@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "Notices: ${{ toJSON(fromJSON(env.CVEs)) }}"
           echo "HAS_CVE=${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}" >> $GITHUB_ENV
-          echo "Has CVE? ${{ env.HAS_CVE }}"
+          echo "Has CVE? ${{ !contains(toJSON((fromJSON(env.CVEs).*.*)), '{}') }}"
 
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90 }}"
         # echo "${{ toJSON(env.CVEs).folding-at-home-fcole90.* }}"
