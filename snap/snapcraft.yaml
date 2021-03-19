@@ -148,7 +148,7 @@ apps:
 
   # CLI command to configure the application
   configure: 
-    command: usr/bin/FAHClient -v --chdir $SNAP_COMMON --configure
+    command: usr/bin/FAHClient -v --chdir $SNAP_USER_COMMON --configure
     environment:
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:/var/lib/snapd/hostfs/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/"
     # Makes this command be an autorun command upon install and boot: https://snapcraft.io/docs/services-and-daemons

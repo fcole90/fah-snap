@@ -8,11 +8,11 @@
 
 ## How can I install Folding at Home?
 ```
-sudo snap install folding-at-home-fcole90 --edge # Install
-snap connect folding-at-home-fcole90:hardware-observe # Allow checking your hardware
+sudo snap install folding-at-home-fcole90 # Install
+snap connect folding-at-home-fcole90:hardware-observe # Allow checking your hardware (Should now be autoconnected)
 ```
-The second command is needed in order for the application to access information on your hardware. It needs it to
-correctly detect your GPUs.
+The `hardware-observe` connection allows the Folding at home to access information on your hardware, which it requires to
+detect your GPUs correctly.
 
 <!--
 ## How can I use Folding at Home as a daemon?
@@ -40,7 +40,15 @@ This is currently unintuitive, I'm working in my spare time on improving the use
 -->
 
 ## How can I interact with the daemon or service with the GUI?
-You can just launch `FAHControl` from your applications. If it says that no client is running, you can activate it as either a daemon or user service. Follow the previous instructions on how to do that.
+You can just launch `FAHControl` from your applications or from terminal:
+```
+folding-at-home-fcole90.FAHControl
+```
+
+If it says that no client is running, you can activate it from a terminal window:
+```
+folding-at-home-fcole90
+```
 
 # Folding@Home - Help research with distributed computing.
 

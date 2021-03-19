@@ -6,8 +6,8 @@ on:
     branches: [master]
     types: [opened, synchronize]
   schedule:
-  # * is a special character in YAML so you have to quote this string
-  - cron:  '0 */12 * * *'
+  # this string has quotes because '*' is a special character in YAML 
+  - cron:  '0 */12 * * *'  # Every 12 hours at minute 0
 
 jobs:
   packaging_snap:
@@ -16,7 +16,6 @@ jobs:
       SNAP_NAME: folding-at-home-fcole90
     steps:
       - name: Install Review Tools
-        # if: ${{ github.event_name == 'schedule' }}
         run: sudo snap install review-tools
 
       # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
@@ -27,7 +26,6 @@ jobs:
           review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
           echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
           rm ${{ env.SNAP_NAME }}*.snap 
-        # sudo snap remove review-tools
       
        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
       - name: Print Notices and Set HAS_CVE env variable
@@ -62,16 +60,16 @@ jobs:
       
       - name: Check Files
         run: ls
-
-      - name: Review Snap
-        if: ${{ env.SHOULD_BUILD }}
-        run: review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
       
       - name: Snap Store Login
         if: ${{ env.SHOULD_BUILD }}
         run: |
           echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
           snapcraft whoami
+
+      - name: Review Snap
+        if: ${{ env.SHOULD_BUILD }}
+        run: review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
 
       - name: Snap Store Release
         if: ${{ env.SHOULD_BUILD }}
