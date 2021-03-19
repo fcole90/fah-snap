@@ -39,6 +39,9 @@ jobs:
       - name: Decide if should rebuild
         run: |
           echo SHOULD_BUILD=$(echo ${{ github.event_name != 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}) >> $GITHUB_ENV
+      
+      - name: Check
+        run: echo ${{ env.SHOULD_BUILD }}
         
       # - uses: actions/checkout@v2
       #   if: ${{ env.SHOULD_BUILD }}
