@@ -16,6 +16,7 @@ jobs:
       SNAP_NAME: folding-at-home-fcole90
     steps:
       - name: Install Review Tools
+        if: ${{ github.event_name == 'schedule' }}
         run: sudo snap install review-tools
 
       # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
@@ -25,6 +26,7 @@ jobs:
           snap download ${{ env.SNAP_NAME }}
           review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
           echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
+          sudo snap remove review-tools
           rm ${{ env.SNAP_NAME }}*.snap
       
        # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
@@ -39,13 +41,6 @@ jobs:
       - name: Decide if should rebuild
         run: |
           echo '''SHOULD_BUILD=$(echo "${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}")''' >> $GITHUB_ENV
-      
-      - name: Test
-        run: |
-          echo "Needs rebuild: ${{ env.SHOULD_BUILD }}"
-          echo "Needs rebuild: ${{ env.SHOULD_BUILD == true }}"
-          echo "Needs rebuild: ${{ env.SHOULD_BUILD == 'true' }}"
-          echo "Needs rebuild: ${{ env.SHOULD_BUILD || false }}"
         
       - uses: actions/checkout@v2
         if: ${{ env.SHOULD_BUILD }}
