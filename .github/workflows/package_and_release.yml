@@ -16,7 +16,7 @@ jobs:
       SNAP_NAME: folding-at-home-fcole90
     steps:
       - name: Install Review Tools
-        if: ${{ github.event_name == 'schedule' }}
+        # if: ${{ github.event_name == 'schedule' }}
         run: sudo snap install review-tools
 
       # Download the snap, check notices, inline the JSON output and save as 'env.CVEs'
@@ -53,6 +53,7 @@ jobs:
           sudo /snap/bin/lxd.migrate -yes
           sudo /snap/bin/lxd waitready
           sudo /snap/bin/lxd init --auto
+          sudo chown $USER:$USER /var/snap/lxd/common/lxd/unix.socket
           sg lxd -c "sudo snap install snapcraft --classic"
       
       - name: Build Snap
@@ -62,9 +63,9 @@ jobs:
       - name: Check Files
         run: ls
 
-      # - name: Review Snap
-      #   if: ${{ env.SHOULD_BUILD }}
-      #   run: review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
+      - name: Review Snap
+        if: ${{ env.SHOULD_BUILD }}
+        run: review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
       
       - name: Snap Store Login
         if: ${{ env.SHOULD_BUILD }}
@@ -74,4 +75,4 @@ jobs:
 
       - name: Snap Store Release
         if: ${{ env.SHOULD_BUILD }}
-        run: sudo snapcraft upload --release=stable ${{ env.SNAP_NAME }}*.snap
+        run: snapcraft upload --release=stable ${{ env.SNAP_NAME }}*.snap
