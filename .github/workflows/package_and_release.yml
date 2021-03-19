@@ -26,7 +26,7 @@ jobs:
           snap download ${{ env.SNAP_NAME }}
           review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves
           echo "CVEs=$(review-tools.check-notices ${{ env.SNAP_NAME }}*.snap --with-cves | sed -Ez 's/\n//g')" >> $GITHUB_ENV
-          rm ${{ env.SNAP_NAME }}*.snap
+        # rm ${{ env.SNAP_NAME }}*.snap
         # sudo snap remove review-tools
       
       #  # Print notices on screen and set 'HAS_CVE' to 'true' or 'false' ( /!\ Note that it is a string)
