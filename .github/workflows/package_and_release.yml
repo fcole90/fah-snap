@@ -57,7 +57,7 @@ jobs:
       
       - name: Build Snap
         if: ${{ env.SHOULD_BUILD }}
-        run: sg lxd -c "$SNAPCRAFT_BUILD_INFO snapcraft"
+        run: sg lxd -c "SNAPCRAFT_BUILD_INFO=1 snapcraft --use-lxd"
       
       - name: Check Files
         run: ls
