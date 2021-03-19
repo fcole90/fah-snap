@@ -39,13 +39,13 @@ See more on this on https://snapcraft.io/docs/environment-variables
 This is currently unintuitive, I'm working in my spare time on improving the user experience.
 -->
 
-## How can I interact with the daemon or service with the GUI?
+## How can I interact with the service using the GUI?
 You can just launch `FAHControl` from your applications or from terminal:
 ```
 folding-at-home-fcole90.FAHControl
 ```
 
-If it says that no client is running, you can activate it from a terminal window:
+If it says that no client is running, you can activate the client from a terminal:
 ```
 folding-at-home-fcole90
 ```
