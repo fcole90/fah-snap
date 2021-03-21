@@ -38,18 +38,7 @@ jobs:
        
       - name: Decide if should rebuild
         run: |
-          echo SHOULD_BUILD=$(echo ${{ github.event_name != 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}) >> $GITHUB_ENV
-
-      - name: Build check
-        run: |
-          echo ${{ env.SHOULD_BUILD }}
-          echo ${{ env.SHOULD_BUILD == 'true'}}
-          echo ${{ env.SHOULD_BUILD == 'false'}}
-          echo ${{ fromJSON(env.SHOULD_BUILD) }}
-          echo ${{ fromJSON(env.SHOULD_BUILD) == true }}
-          echo ${{ fromJSON(env.SHOULD_BUILD) == false }}
-          echo ${{ fromJSON(env.SHOULD_BUILD) == 'true' }}
-          echo ${{ fromJSON(env.SHOULD_BUILD) == 'false' }}
+          echo SHOULD_BUILD=$(echo ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}) >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
