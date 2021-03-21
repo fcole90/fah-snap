@@ -38,13 +38,24 @@ jobs:
        
       - name: Decide if should rebuild
         run: |
-          echo SHOULD_BUILD=$(echo ${{ github.event_name == 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}) >> $GITHUB_ENV
-        
+          echo SHOULD_BUILD=$(echo ${{ github.event_name != 'push' ||  (github.event_name == 'schedule' && env.HAS_CVE == 'true') }}) >> $GITHUB_ENV
+
+      - name: Build check
+        run: |
+          echo ${{ env.SHOULD_BUILD }}
+          echo ${{ env.SHOULD_BUILD == 'true'}}
+          echo ${{ env.SHOULD_BUILD == 'false'}}
+          echo ${{ fromJSON(env.SHOULD_BUILD) }}
+          echo ${{ fromJSON(env.SHOULD_BUILD) == true }}
+          echo ${{ fromJSON(env.SHOULD_BUILD) == false }}
+          echo ${{ fromJSON(env.SHOULD_BUILD) == 'true' }}
+          echo ${{ fromJSON(env.SHOULD_BUILD) == 'false' }}
+
       - uses: actions/checkout@v2
-        if: ${{ env.SHOULD_BUILD }}
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
       
       - name: Install and Configure LXD and Snapcraft
-        if: ${{ env.SHOULD_BUILD }}
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
           sudo snap install lxd
           sudo usermod --append --groups lxd $USER
@@ -55,22 +66,22 @@ jobs:
           sg lxd -c "sudo snap install snapcraft --classic"
       
       - name: Build Snap
-        if: ${{ env.SHOULD_BUILD }}
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: sg lxd -c "SNAPCRAFT_BUILD_INFO=1 snapcraft --use-lxd"
       
       - name: Check Files
         run: ls
       
       - name: Snap Store Login
-        if: ${{ env.SHOULD_BUILD }}
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
           echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
           snapcraft whoami
 
       - name: Review Snap
-        if: ${{ env.SHOULD_BUILD }}
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: review-tools.snap-review ${{ env.SNAP_NAME }}*.snap
 
       - name: Snap Store Release
-        if: ${{ env.SHOULD_BUILD }}
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: snapcraft upload --release=stable ${{ env.SNAP_NAME }}*.snap
