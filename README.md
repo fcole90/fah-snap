@@ -4,7 +4,9 @@
 
 **Builds:** [![.github/workflows/package_and_release.yml](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml/badge.svg)](https://github.com/fcole90/fah-snap/actions/workflows/package_and_release.yml)
 
-![Screenshot_from_2020-03-26_00-18-44 (1)](https://user-images.githubusercontent.com/1292230/83427711-d319dc80-a439-11ea-949f-95fafa805886.png)
+<a href="https://snapcraft.io/folding-at-home-fcole90" target="_blank">
+  <img src="https://user-images.githubusercontent.com/1292230/83427711-d319dc80-a439-11ea-949f-95fafa805886.png" />
+</a>
 
 ## How can I install Folding at Home?
 ```
@@ -68,6 +70,8 @@ Folding@Home is run by Pandegroup of Stanford University. You can find more info
 the Folding@Home [website](https://foldingathome.org/about/).
 
 ## Metrics as of March 2021
-![image](https://user-images.githubusercontent.com/1292230/112675832-53e61100-8e70-11eb-8d05-f5b687bf25b3.png)
-![image](https://user-images.githubusercontent.com/1292230/112675686-24370900-8e70-11eb-85e5-5cd5afdea827.png)
+<a href="https://snapcraft.io/folding-at-home-fcole90" target="_blank">
+  <img src="https://user-images.githubusercontent.com/1292230/112675832-53e61100-8e70-11eb-8d05-f5b687bf25b3.png" />
+  <img src="https://user-images.githubusercontent.com/1292230/112675686-24370900-8e70-11eb-85e5-5cd5afdea827.png" />
+</a>
 
