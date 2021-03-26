@@ -69,4 +69,5 @@ the Folding@Home [website](https://foldingathome.org/about/).
 
 ## Metrics as of March 2021
 ![image](https://user-images.githubusercontent.com/1292230/112675380-c1457200-8e6f-11eb-99b8-4232012709c3.png)
+![image](https://user-images.githubusercontent.com/1292230/112675686-24370900-8e70-11eb-85e5-5cd5afdea827.png)
 
