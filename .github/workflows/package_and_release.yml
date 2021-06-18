@@ -65,7 +65,7 @@ jobs:
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
           echo ${{ secrets.SNAP_TOKEN }} | snapcraft login --with -
-          snapcraft whoami || "Cannot determine who am I"
+          snapcraft whoami || echo "Cannot determine who I am."
 
       - name: Review Snap
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
