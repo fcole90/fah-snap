@@ -71,8 +71,10 @@ the Folding@Home [website](https://foldingathome.org/about/).
 
 ## Metrics as of March 2021
 <a href="https://snapcraft.io/folding-at-home-fcole90" target="_blank">
-  <img src="https://user-images.githubusercontent.com/1292230/112675832-53e61100-8e70-11eb-8d05-f5b687bf25b3.png" />
-  <img src="https://user-images.githubusercontent.com/1292230/112675686-24370900-8e70-11eb-85e5-5cd5afdea827.png" />
+  <!-- Downloads -->
+  <img src="https://user-images.githubusercontent.com/1292230/122562389-b0119900-d04b-11eb-9e57-23afd702a617.png" />
+  <!-- Territories -->
+  <img src="https://user-images.githubusercontent.com/1292230/122562543-dafbed00-d04b-11eb-8880-c0f94bc84645.png" />
 </a>
 
 <!-- - -->
