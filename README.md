@@ -81,4 +81,4 @@ the Folding@Home [website](https://foldingathome.org/about/).
   <img src="https://user-images.githubusercontent.com/1292230/122562543-dafbed00-d04b-11eb-8880-c0f94bc84645.png" />
 </a>
 
-<!-- - -->
+<!-- Up -->
