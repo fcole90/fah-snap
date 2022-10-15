@@ -46,6 +46,9 @@ jobs:
       - name: Install and Configure LXD and Snapcraft
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
+          echo "Remove deb LXD"
+          sudo apt remove lxd-client -y
+          hash -r
           echo "Add usermod..."
           sudo usermod --append --groups lxd $USER
           echo "Migrate LXD..."
