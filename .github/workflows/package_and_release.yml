@@ -46,13 +46,17 @@ jobs:
       - name: Install and Configure LXD and Snapcraft
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
-          sudo snap remove --purge lxd
-          sudo snap install lxd
+          echo "Add usermod..."
           sudo usermod --append --groups lxd $USER
+          echo "Migrate LXD..."
           sudo /snap/bin/lxd.migrate -yes
+          echo "Waiting LXD to be ready..."
           sudo /snap/bin/lxd waitready
+          echo "Initialise LXD (auto)..."
           sudo /snap/bin/lxd init --auto
+          echo "Get socket ownership..."
           sudo chown $USER:$USER /var/snap/lxd/common/lxd/unix.socket
+          echo "Installing snapcraft in the LXD container..."
           sg lxd -c "sudo snap install snapcraft --classic"
       
       - name: Build Snap
