@@ -48,10 +48,10 @@ jobs:
         run: |
           echo "Add usermod..."
           sudo usermod --append --groups lxd $USER
-          # echo "Migrate LXD..."
-          # sudo /snap/bin/lxd.migrate -yes
           echo "Waiting LXD to be ready..."
           sudo /snap/bin/lxd waitready
+          echo "Migrate LXD..."
+          sudo /snap/bin/lxd.migrate -yes
           echo "Initialise LXD (auto)..."
           sudo /snap/bin/lxd init --auto
           echo "Get socket ownership..."
