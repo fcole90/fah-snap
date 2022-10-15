@@ -46,6 +46,7 @@ jobs:
       - name: Install and Configure LXD and Snapcraft
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
+          sudo snap remove --purge lxd
           sudo snap install lxd
           sudo usermod --append --groups lxd $USER
           sudo /snap/bin/lxd.migrate -yes
