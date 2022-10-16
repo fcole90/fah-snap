@@ -46,6 +46,8 @@ jobs:
       - name: Install and Configure LXD and Snapcraft
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: |
+          echo "Get latest LXD"
+          sudo snap refresh --channel=stable lxd
           echo "Add usermod..."
           sudo usermod --append --groups lxd $USER
           echo "Waiting LXD to be ready..."
