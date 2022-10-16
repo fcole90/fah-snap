@@ -59,6 +59,11 @@ jobs:
           echo "Installing snapcraft in the LXD container..."
           sg lxd -c "sudo snap install snapcraft --classic"
       
+      - name: Disable firewall
+        if: ${{ fromJSON(env.SHOULD_BUILD) }}
+        run: |
+          sudo ufw disable
+      
       - name: Build Snap
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         run: sg lxd -c "SNAPCRAFT_BUILD_INFO=1 snapcraft --use-lxd"
