@@ -66,7 +66,7 @@ jobs:
           
       - name: Snap Store Login Verification
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
-        env: # Or as an environment variable
+        env: # Export secret as an environment variable
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: |
           snapcraft whoami || (echo "Cannot determine who I am." && exit 1)
@@ -84,4 +84,6 @@ jobs:
 
       - name: Snap Store Release
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
+        env: # Export secret as an environment variable
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: snapcraft upload --release=stable ${{ env.SNAP_NAME }}*.snap
