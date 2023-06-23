@@ -64,13 +64,12 @@ jobs:
         run: |
           sudo ufw disable
           
-      - name: Snap Store Login
+      - name: Snap Store Login Verification
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
         env: # Or as an environment variable
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: |
-          snapcraft login
-          snapcraft whoami || echo "Cannot determine who I am."
+          snapcraft whoami || echo "Cannot determine who I am." && exit 1
       
       - name: Build Snap
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
