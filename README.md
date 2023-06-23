@@ -74,6 +74,7 @@ for developing therapeutics.
 Folding@Home is run by Pandegroup of Stanford University. You can find more information on 
 the Folding@Home [website](https://foldingathome.org/about/).
 
+<!--
 ## Metrics as of June 2021
 <a href="https://snapcraft.io/folding-at-home-fcole90" target="_blank">
   <!-- Downloads -->
@@ -81,3 +82,4 @@ the Folding@Home [website](https://foldingathome.org/about/).
   <!-- Territories -->
   <img src="https://user-images.githubusercontent.com/1292230/122562543-dafbed00-d04b-11eb-8880-c0f94bc84645.png" />
 </a>
+-->
