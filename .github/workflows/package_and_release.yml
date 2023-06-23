@@ -69,7 +69,7 @@ jobs:
         env: # Or as an environment variable
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: |
-          snapcraft whoami || echo "Cannot determine who I am." && exit 1
+          snapcraft whoami || (echo "Cannot determine who I am." && exit 1)
       
       - name: Build Snap
         if: ${{ fromJSON(env.SHOULD_BUILD) }}
