@@ -1,8 +1,8 @@
 name: folding-at-home-fcole90
 title: Folding@Home
 icon: snap/gui/fah-logo.png
-base: core20
-version: '7.6.latest~snap3'
+base: core24
+version: '7.6.latest~snap4'
 summary: Folding at Home - Help research with distributed computing
 description: |
  Folding@home (FAH or F@h) is a distributed computing project for simulating protein dynamics, including the process of
