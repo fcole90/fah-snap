@@ -9,6 +9,7 @@ Please, refer to the original app download page on the Folding@Home website: htt
 *Snap package of Folding@Home*
 
 ```
+# Warning: unmaintained
 sudo snap install folding-at-home-fcole90
 ```
 
