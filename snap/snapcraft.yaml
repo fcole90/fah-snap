@@ -15,8 +15,7 @@ description: |
 grade: stable
 confinement: strict
 architectures: 
-  - build-on: amd64
-    run-on: amd64
+  - build-on: [amd64]
 compression: lzo  # Better decompression performance 
 
 parts:
