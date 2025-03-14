@@ -1,4 +1,9 @@
-Hi! Unfortunately this snap is now unmaintained. Please, refer to the original app download page on the Folding@Home website: https://foldingathome.org/start-folding/
+### Unmaintained
+Hi! Unfortunately this snap is now **unmaintained**. 
+
+Please, refer to the original app download page on the Folding@Home website: https://foldingathome.org/start-folding/
+
+---
 
 <!-- 20250312-02 -->
 *Snap package of Folding@Home*
